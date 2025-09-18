@@ -1,7 +1,8 @@
-const App = () => {
+
+function App() {
   return (
     <div>
-      
+      App
     </div>
   )
 }

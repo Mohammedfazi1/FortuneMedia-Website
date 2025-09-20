@@ -1,104 +1,116 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
   Send,
   CheckCircle,
   User,
-  Building
-} from 'lucide-react';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+  Building,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const contactInfo = [
   {
     icon: MapPin,
-    title: 'Address',
-    details: '123 Business District, Mumbai, Maharashtra 400001, India',
-    color: 'text-blue-500'
+    title: "Address",
+    details:
+      "123 Business District, Mumbai, Maharashtra 400001, India",
+    color: "text-blue-500",
   },
   {
     icon: Phone,
-    title: 'Phone',
-    details: '+91 98765 43210',
-    color: 'text-green-500'
+    title: "Phone",
+    details: "+91 98765 43210",
+    color: "text-green-500",
   },
   {
     icon: Mail,
-    title: 'Email',
-    details: 'hello@forchunemedia.com',
-    color: 'text-red-500'
+    title: "Email",
+    details: "hello@furtunemedia.com",
+    color: "text-red-500",
   },
   {
     icon: Clock,
-    title: 'Business Hours',
-    details: 'Mon - Fri: 9:00 AM - 6:00 PM\nSat: 10:00 AM - 4:00 PM',
-    color: 'text-purple-500'
-  }
+    title: "Business Hours",
+    details:
+      "Mon - Fri: 9:00 AM - 6:00 PM\nSat: 10:00 AM - 4:00 PM",
+    color: "text-purple-500",
+  },
 ];
 
 const serviceOptions = [
-  'Rickshaw Autotop Ads',
-  'Gift Articles',
-  'LED Displays',
-  'Gantry Arches',
-  'Center Medians',
-  'AC Traffic Booth',
-  'Barricades',
-  'Hoarding',
-  'Consultation',
-  'Other'
+  "Rickshaw Autotop Ads",
+  "Gift Articles",
+  "LED Displays",
+  "Gantry Arches",
+  "Center Medians",
+  "AC Traffic Booth",
+  "Barricades",
+  "Hoarding",
+  "Consultation",
+  "Other",
 ];
 
 export function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    service: '',
-    budget: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    service: "",
+    budget: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement
+    >,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setIsSubmitting(false);
     setIsSubmitted(true);
-    
+
     // Reset form after success message
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        service: '',
-        budget: '',
-        message: ''
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        budget: "",
+        message: "",
       });
     }, 3000);
   };
@@ -117,8 +129,9 @@ export function Contact() {
             Get In <span className="text-primary">Touch</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Ready to transform your brand's visibility? Let's discuss your advertising 
-            goals and create a customized solution that delivers maximum impact.
+            Ready to transform your brand's visibility? Let's
+            discuss your advertising goals and create a
+            customized solution that delivers maximum impact.
           </p>
         </motion.div>
 
@@ -131,7 +144,9 @@ export function Contact() {
             className="lg:col-span-1 space-y-8"
           >
             <div>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Contact Information</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                Contact Information
+              </h2>
               <div className="space-y-6">
                 {contactInfo.map((info, index) => {
                   const Icon = info.icon;
@@ -140,15 +155,24 @@ export function Contact() {
                       key={info.title}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: index * 0.1,
+                      }}
                       className="flex items-start space-x-4"
                     >
-                      <div className={`w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center ${info.color}`}>
+                      <div
+                        className={`w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center ${info.color}`}
+                      >
                         <Icon className="h-6 w-6" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-1">{info.title}</h3>
-                        <p className="text-gray-600 whitespace-pre-line">{info.details}</p>
+                        <h3 className="font-semibold text-gray-900 mb-1">
+                          {info.title}
+                        </h3>
+                        <p className="text-gray-600 whitespace-pre-line">
+                          {info.details}
+                        </p>
                       </div>
                     </motion.div>
                   );
@@ -174,15 +198,17 @@ export function Contact() {
                       allowFullScreen
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
-                      title="Forchune Media Location"
+                      title="Furtune Media Location"
                       className="rounded-lg"
                     />
-                    
+
                     {/* Fallback for map */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                       <div className="text-center text-primary">
                         <MapPin className="h-8 w-8 mx-auto mb-2" />
-                        <p className="font-semibold">Visit Our Office</p>
+                        <p className="font-semibold">
+                          Visit Our Office
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -200,8 +226,10 @@ export function Contact() {
           >
             <Card className="shadow-2xl border-0">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">Send us a Message</h2>
-                
+                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                  Send us a Message
+                </h2>
+
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -209,17 +237,26 @@ export function Contact() {
                     className="text-center py-12"
                   >
                     <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                      Message Sent!
+                    </h3>
                     <p className="text-gray-600">
-                      Thank you for your inquiry. We'll get back to you within 24 hours.
+                      Thank you for your inquiry. We'll get back
+                      to you within 24 hours.
                     </p>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="space-y-6"
+                  >
                     {/* Name and Email */}
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Full Name *
                         </label>
                         <div className="relative">
@@ -236,9 +273,12 @@ export function Contact() {
                           />
                         </div>
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Email Address *
                         </label>
                         <div className="relative">
@@ -260,7 +300,10 @@ export function Contact() {
                     {/* Phone and Company */}
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="phone"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Phone Number
                         </label>
                         <div className="relative">
@@ -276,9 +319,12 @@ export function Contact() {
                           />
                         </div>
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="company"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Company Name
                         </label>
                         <div className="relative">
@@ -299,45 +345,80 @@ export function Contact() {
                     {/* Service and Budget */}
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="service"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Service of Interest
                         </label>
-                        <Select value={formData.service} onValueChange={(value) => handleSelectChange('service', value)}>
+                        <Select
+                          value={formData.service}
+                          onValueChange={(value) =>
+                            handleSelectChange("service", value)
+                          }
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select a service" />
                           </SelectTrigger>
-                          <SelectContent>
-                            {serviceOptions.map((service) => (
-                              <SelectItem key={service} value={service}>
-                                {service}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
+                       <SelectContent className="bg-white text-black">
+  {serviceOptions.map((service) => (
+    <SelectItem
+      key={service}
+      value={service}
+      className="text-black hover:bg-gray-100"
+    >
+      {service}
+    </SelectItem>
+  ))}
+</SelectContent>
+
                         </Select>
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label
+                          htmlFor="budget"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
                           Budget Range
                         </label>
-                        <Select value={formData.budget} onValueChange={(value) => handleSelectChange('budget', value)}>
+                        <Select
+                          value={formData.budget}
+                          onValueChange={(value) =>
+                            handleSelectChange("budget", value)
+                          }
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select budget range" />
                           </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="under-10k">Under ₹10,000</SelectItem>
-                            <SelectItem value="10k-50k">₹10,000 - ₹50,000</SelectItem>
-                            <SelectItem value="50k-100k">₹50,000 - ₹1,00,000</SelectItem>
-                            <SelectItem value="100k-500k">₹1,00,000 - ₹5,00,000</SelectItem>
-                            <SelectItem value="above-500k">Above ₹5,00,000</SelectItem>
-                          </SelectContent>
+                          <SelectContent className="bg-white text-black">
+  <SelectItem value="under-10k" className="text-black hover:bg-gray-100">
+    Under ₹10,000
+  </SelectItem>
+  <SelectItem value="10k-50k" className="text-black hover:bg-gray-100">
+    ₹10,000 - ₹50,000
+  </SelectItem>
+  <SelectItem value="50k-100k" className="text-black hover:bg-gray-100">
+    ₹50,000 - ₹1,00,000
+  </SelectItem>
+  <SelectItem value="100k-500k" className="text-black hover:bg-gray-100">
+    ₹1,00,000 - ₹5,00,000
+  </SelectItem>
+  <SelectItem value="above-500k" className="text-black hover:bg-gray-100">
+    Above ₹5,00,000
+  </SelectItem>
+</SelectContent>
+
                         </Select>
                       </div>
                     </div>
 
                     {/* Message */}
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
                         Message *
                       </label>
                       <Textarea
@@ -389,13 +470,21 @@ export function Contact() {
             Prefer to talk directly?
           </h3>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="group">
+            <Button
+              size="lg"
+              variant="outline"
+              className="group"
+            >
               <Phone className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               Call Now: +91 98765 43210
             </Button>
-            <Button size="lg" variant="outline" className="group">
+            <Button
+              size="lg"
+              variant="outline"
+              className="group"
+            >
               <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Email: hello@forchunemedia.com
+              Email: hello@furtunemedia.com
             </Button>
           </div>
         </motion.div>

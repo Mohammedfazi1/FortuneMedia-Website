@@ -19,6 +19,10 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { id: 'contact', label: 'Contact Us' }
   ];
 
+  // Determine if we need dark theme (for white background pages)
+  const needsDarkTheme = currentPage === 'services' || currentPage === 'contact' || isScrolled;
+  const isHomePage = currentPage === 'home';
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -38,7 +42,9 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+        needsDarkTheme 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,7 +60,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                 <span className="text-white text-sm font-bold">F</span>
               </div>
               <span className={`text-lg font-bold transition-colors ${
-                isScrolled ? 'text-primary' : 'text-white'
+                needsDarkTheme ? 'text-primary' : 'text-white'
               }`}>
                 Furtune Media
               </span>
@@ -72,8 +78,10 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   onClick={() => handleNavClick(item.id)}
                   className={`px-3 py-2 text-sm font-medium transition-colors ${
                     currentPage === item.id
-                      ? 'text-primary border-b-2 border-primary'
-                      : isScrolled
+                      ? needsDarkTheme 
+                        ? 'text-primary border-b-2 border-primary'
+                        : 'text-white border-b-2 border-white'
+                      : needsDarkTheme
                       ? 'text-gray-700 hover:text-primary'
                       : 'text-white/90 hover:text-white'
                   }`}
@@ -91,7 +99,9 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
               className={`p-2 ${
-                isScrolled ? 'text-gray-700 hover:text-primary' : 'text-white hover:text-white/80'
+                needsDarkTheme 
+                  ? 'text-gray-700 hover:text-primary hover:bg-gray-100' 
+                  : 'text-white hover:text-white/80 hover:bg-white/10'
               }`}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -107,7 +117,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-200"
+            className="md:hidden bg-white border-t border-gray-200 shadow-lg"
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navItems.map((item) => (
@@ -115,9 +125,9 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   key={item.id}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleNavClick(item.id)}
-                  className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors ${
+                  className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors rounded-md ${
                     currentPage === item.id
-                      ? 'text-primary bg-primary/10'
+                      ? 'text-primary bg-primary/10 border-l-4 border-primary'
                       : 'text-gray-700 hover:text-primary hover:bg-gray-50'
                   }`}
                 >

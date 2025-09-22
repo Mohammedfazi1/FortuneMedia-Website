@@ -4,10 +4,81 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Fortune Media - Premium Outdoor Advertising & Marketing Solutions</title>
+    <meta name="description" content="Transform your brand visibility with Fortune Media's innovative outdoor advertising solutions. From LED displays to rickshaw ads, we deliver results that drive business growth." />
+    <meta name="keywords" content="outdoor advertising, LED displays, billboard advertising, rickshaw ads, marketing solutions, brand visibility, Fortune Media" />
+    <meta name="author" content="Fortune Media" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Fortune Media - Premium Outdoor Advertising Solutions" />
+    <meta property="og:description" content="Innovative marketing campaigns that deliver exceptional ROI. Trusted by leading brands across India." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fortunemedia.com" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fortune Media - Outdoor Advertising Excellence" />
+    <meta name="twitter:description" content="Transform your brand with our data-driven advertising solutions" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+    
+    <!-- Preconnect to External Domains -->
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    
+    <!-- Performance and Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Fortune Media",
+      "description": "Premium outdoor advertising and marketing solutions",
+      "url": "https://fortunemedia.com",
+      "logo": "https://fortunemedia.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-98765-43210",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Business District",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400001",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://www.facebook.com/fortunemedia",
+        "https://www.instagram.com/fortunemedia",
+        "https://www.linkedin.com/company/fortunemedia"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker for Caching -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(registrationError => console.log('SW registration failed'));
+        });
+      }
+    </script>
   </body>
 </html>

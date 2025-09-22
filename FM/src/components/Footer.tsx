@@ -50,12 +50,72 @@ const socialLinks = [
 
 interface FooterProps {
   onNavigate: (page: string) => void;
+  variant?: 'full' | 'compact';
 }
 
-export function Footer({ onNavigate }: FooterProps) {
+const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProps) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Compact footer for portfolio page
+  if (variant === 'compact') {
+    return (
+      <footer className="bg-gray-900 text-white py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Logo and copyright */}
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">F</span>
+                </div>
+                <span className="font-semibold">Fortune Media</span>
+              </div>
+              <span className="text-gray-400 text-sm hidden sm:block">© 2024 All rights reserved.</span>
+            </div>
+
+            {/* Social links and back to top */}
+            <div className="flex items-center space-x-4">
+              {/* Social links */}
+              <div className="flex space-x-3">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <motion.a
+                      key={social.label}
+                      href={social.href}
+                      aria-label={social.label}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-8 h-8 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
+                    >
+                      <Icon className="h-4 w-4" />
+                    </motion.a>
+                  );
+                })}
+              </div>
+              
+              {/* Back to top button */}
+              <Button
+                onClick={scrollToTop}
+                className="bg-primary hover:bg-primary/90 text-white p-2 rounded-full"
+                aria-label="Back to top"
+                size="sm"
+              >
+                <ArrowUp className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+          
+          {/* Mobile copyright */}
+          <div className="text-center text-gray-400 text-sm mt-4 sm:hidden">
+            © 2024 Fortune Media. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="bg-gray-900 text-white relative">
@@ -84,7 +144,7 @@ export function Footer({ onNavigate }: FooterProps) {
                 <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold">F</span>
                 </div>
-                <span className="text-xl font-bold">Furtune Media</span>
+                <span className="text-xl font-bold">Fortune Media</span>
               </div>
 
               <p className="text-gray-300 mb-6 leading-relaxed">
@@ -108,7 +168,7 @@ export function Footer({ onNavigate }: FooterProps) {
                 
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-gray-300">hello@furtunemedia.com</span>
+                  <span className="text-gray-300">hello@fortunemedia.com</span>
                 </div>
               </div>
             </motion.div>
@@ -222,7 +282,7 @@ export function Footer({ onNavigate }: FooterProps) {
             {/* Copyright */}
             <div className="mb-4 md:mb-0">
               <p className="text-gray-400 text-sm">
-                © 2024 Furtune Media. All rights reserved.
+                © 2024 Fortune Media. All rights reserved.
               </p>
             </div>
 
@@ -249,4 +309,8 @@ export function Footer({ onNavigate }: FooterProps) {
       </div>
     </footer>
   );
-}
+});
+
+FooterComponent.displayName = 'Footer';
+
+export const Footer = FooterComponent;

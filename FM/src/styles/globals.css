@@ -122,10 +122,55 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Improve scrolling performance */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    width: 100%;
+    /* Improve performance */
+    text-rendering: optimizeSpeed;
+    /* Prevent layout shifts */
+    min-height: 100vh;
+  }
+
+  html {
+    overflow-x: hidden;
+    width: 100%;
+    /* Improve scrolling on mobile */
+    scroll-behavior: smooth;
+  }
+
+  /* Optimize images */
+  img {
+    max-width: 100%;
+    height: auto;
+    /* Improve loading performance */
+    content-visibility: auto;
+  }
+
+  /* Optimize motion for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Optimize focus for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Improve performance for complex layouts */
+  .performance-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
   }
 }
 

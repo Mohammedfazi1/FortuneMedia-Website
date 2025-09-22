@@ -35,7 +35,7 @@ const sliderImages = [
   }
 ];
 
-export function ImageSlider() {
+const ImageSliderComponent = React.memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -51,21 +51,21 @@ export function ImageSlider() {
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
-  const goToSlide = (index: number) => {
+  const goToSlide = React.useCallback((index: number) => {
     setCurrentIndex(index);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+  }, []);
 
-  const goToPrevious = () => {
+  const goToPrevious = React.useCallback(() => {
     const newIndex = currentIndex === 0 ? sliderImages.length - 1 : currentIndex - 1;
     goToSlide(newIndex);
-  };
+  }, [currentIndex, goToSlide]);
 
-  const goToNext = () => {
+  const goToNext = React.useCallback(() => {
     const newIndex = currentIndex === sliderImages.length - 1 ? 0 : currentIndex + 1;
     goToSlide(newIndex);
-  };
+  }, [currentIndex, goToSlide]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-gray-900">
@@ -84,6 +84,7 @@ export function ImageSlider() {
               src={sliderImages[currentIndex].src}
               alt={sliderImages[currentIndex].alt}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/40" />
           </motion.div>
@@ -164,4 +165,8 @@ export function ImageSlider() {
       </div>
     </section>
   );
-}
+});
+
+ImageSliderComponent.displayName = 'ImageSlider';
+
+export const ImageSlider = ImageSliderComponent;

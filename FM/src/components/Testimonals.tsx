@@ -10,7 +10,7 @@ const testimonials = [
     name: "Rajesh Kumar",
     position: "Marketing Director",
     company: "Airtel",
-    content: "Furtune Media transformed our brand presence with their innovative outdoor advertising campaigns. The ROI exceeded our expectations by 300%.",
+    content: "Forchune Media transformed our brand presence with their innovative outdoor advertising campaigns. The ROI exceeded our expectations by 300%.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
   },
@@ -28,7 +28,7 @@ const testimonials = [
     name: "Amit Patel",
     position: "Brand Manager",
     company: "GlobalRetail",
-    content: "Working with Furtune Media was a game-changer. Their comprehensive approach to outdoor advertising delivered results beyond our wildest dreams.",
+    content: "Working with Forchune Media was a game-changer. Their comprehensive approach to outdoor advertising delivered results beyond our wildest dreams.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
   },
@@ -37,13 +37,13 @@ const testimonials = [
     name: "Sneha Gupta",
     position: "Marketing Head",
     company: "UrbanDev",
-    content: "The creativity and professionalism of the Furtune Media team is unmatched. They turned our vision into reality with stunning visual campaigns.",
+    content: "The creativity and professionalism of the Forchune Media team is unmatched. They turned our vision into reality with stunning visual campaigns.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
   }
 ];
 
-export function Testimonials() {
+const TestimonialsComponent = React.memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -59,30 +59,30 @@ export function Testimonials() {
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
-  const goToTestimonial = (index: number) => {
+  const goToTestimonial = React.useCallback((index: number) => {
     setCurrentIndex(index);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
+  }, []);
 
-  const goToPrevious = () => {
+  const goToPrevious = React.useCallback(() => {
     const newIndex = currentIndex === 0 ? testimonials.length - 1 : currentIndex - 1;
     goToTestimonial(newIndex);
-  };
+  }, [currentIndex, goToTestimonial]);
 
-  const goToNext = () => {
+  const goToNext = React.useCallback(() => {
     const newIndex = currentIndex === testimonials.length - 1 ? 0 : currentIndex + 1;
     goToTestimonial(newIndex);
-  };
+  }, [currentIndex, goToTestimonial]);
 
-  const renderStars = (rating: number) => {
+  const renderStars = React.useCallback((rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
         className={`h-5 w-5 ${i < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
       />
     ));
-  };
+  }, []);
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
@@ -100,7 +100,7 @@ export function Testimonials() {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Don't just take our word for it. Here's what industry leaders have to say 
-            about their experience working with Furtune Media.
+            about their experience working with Forchune Media.
           </p>
         </motion.div>
 
@@ -244,4 +244,8 @@ export function Testimonials() {
       </div>
     </section>
   );
-}
+});
+
+TestimonialsComponent.displayName = 'Testimonials';
+
+export const Testimonials = TestimonialsComponent;

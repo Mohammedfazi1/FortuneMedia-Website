@@ -64,7 +64,7 @@ const serviceOptions = [
   "Other",
 ];
 
-export function Contact() {
+const ContactComponent = React.memo(() => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -360,18 +360,16 @@ export function Contact() {
                           <SelectTrigger>
                             <SelectValue placeholder="Select a service" />
                           </SelectTrigger>
-                       <SelectContent className="bg-white text-black">
-  {serviceOptions.map((service) => (
-    <SelectItem
-      key={service}
-      value={service}
-      className="text-black hover:bg-gray-100"
-    >
-      {service}
-    </SelectItem>
-  ))}
-</SelectContent>
-
+                          <SelectContent>
+                            {serviceOptions.map((service) => (
+                              <SelectItem
+                                key={service}
+                                value={service}
+                              >
+                                {service}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
                         </Select>
                       </div>
 
@@ -391,24 +389,23 @@ export function Contact() {
                           <SelectTrigger>
                             <SelectValue placeholder="Select budget range" />
                           </SelectTrigger>
-                          <SelectContent className="bg-white text-black">
-  <SelectItem value="under-10k" className="text-black hover:bg-gray-100">
-    Under ₹10,000
-  </SelectItem>
-  <SelectItem value="10k-50k" className="text-black hover:bg-gray-100">
-    ₹10,000 - ₹50,000
-  </SelectItem>
-  <SelectItem value="50k-100k" className="text-black hover:bg-gray-100">
-    ₹50,000 - ₹1,00,000
-  </SelectItem>
-  <SelectItem value="100k-500k" className="text-black hover:bg-gray-100">
-    ₹1,00,000 - ₹5,00,000
-  </SelectItem>
-  <SelectItem value="above-500k" className="text-black hover:bg-gray-100">
-    Above ₹5,00,000
-  </SelectItem>
-</SelectContent>
-
+                          <SelectContent>
+                            <SelectItem value="under-10k">
+                              Under ₹10,000
+                            </SelectItem>
+                            <SelectItem value="10k-50k">
+                              ₹10,000 - ₹50,000
+                            </SelectItem>
+                            <SelectItem value="50k-100k">
+                              ₹50,000 - ₹1,00,000
+                            </SelectItem>
+                            <SelectItem value="100k-500k">
+                              ₹1,00,000 - ₹5,00,000
+                            </SelectItem>
+                            <SelectItem value="above-500k">
+                              Above ₹5,00,000
+                            </SelectItem>
+                          </SelectContent>
                         </Select>
                       </div>
                     </div>
@@ -491,4 +488,8 @@ export function Contact() {
       </div>
     </section>
   );
-}
+});
+
+ContactComponent.displayName = 'Contact';
+
+export const Contact = ContactComponent;

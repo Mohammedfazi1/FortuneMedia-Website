@@ -32,7 +32,7 @@ const benefits = [
   "Scalable Solutions"
 ];
 
-export function LandingPage() {
+const LandingPageComponent = React.memo(() => {
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -100,8 +100,9 @@ export function LandingPage() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1716703742287-2b06c3c6d81a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXJrZXRpbmclMjBhZ2VuY3klMjB0ZWFtJTIwb2ZmaWNlfGVufDF8fHx8MTc1ODEwNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Furtune Media Team"
+                alt="Fortune Media Team"
                 className="w-full h-[500px] object-cover"
+                loading="lazy"
               />
               
               {/* Floating stats card */}
@@ -161,4 +162,8 @@ export function LandingPage() {
       </div>
     </section>
   );
-}
+});
+
+LandingPageComponent.displayName = 'LandingPage';
+
+export const LandingPage = LandingPageComponent;

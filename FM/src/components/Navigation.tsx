@@ -8,7 +8,7 @@ interface NavigationProps {
   onNavigate: (page: string) => void;
 }
 
-export function Navigation({ currentPage, onNavigate }: NavigationProps) {
+const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -41,7 +41,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${
         needsDarkTheme 
           ? 'bg-white/95 backdrop-blur-md shadow-lg' 
           : 'bg-transparent'
@@ -62,7 +62,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               <span className={`text-lg font-bold transition-colors ${
                 needsDarkTheme ? 'text-primary' : 'text-white'
               }`}>
-                Furtune Media
+                Fortune Media
               </span>
             </div>
           </motion.div>
@@ -117,9 +117,10 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-200 shadow-lg"
+            className="md:hidden bg-white border-t border-gray-200 shadow-lg overflow-hidden"
+            style={{ maxHeight: isOpen ? '300px' : '0px' }}
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-w-full">
               {navItems.map((item) => (
                 <motion.button
                   key={item.id}
@@ -140,4 +141,8 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       </AnimatePresence>
     </motion.nav>
   );
-}
+});
+
+NavigationComponent.displayName = 'Navigation';
+
+export const Navigation = NavigationComponent;

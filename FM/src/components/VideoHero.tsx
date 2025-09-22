@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, Facebook, Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
-export function VideoHero() {
+const VideoHeroComponent = React.memo(() => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [showPoster, setShowPoster] = React.useState(true);
@@ -41,7 +41,7 @@ export function VideoHero() {
   };
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full">
         {showPoster ? (
@@ -49,6 +49,8 @@ export function VideoHero() {
             src="https://images.unsplash.com/photo-1716703742287-2b06c3c6d81a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXJrZXRpbmclMjBhZ2VuY3klMjB0ZWFtJTIwb2ZmaWNlfGVufDF8fHx8MTc1ODEwNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080"
             alt="Marketing Agency Team"
             className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
           />
         ) : (
           <video
@@ -70,14 +72,14 @@ export function VideoHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6"
         >
-          Furtune Media
+          Fortune Media
         </motion.h1>
         
         <motion.p
@@ -93,11 +95,11 @@ export function VideoHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
         >
           <Button
             size="lg"
-            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 text-lg"
+            className=" text-white bg-black hover:bg-white hover:text-black px-8 py-3 text-lg"
           >
             Get Started
           </Button>
@@ -109,6 +111,59 @@ export function VideoHero() {
           >
             Learn More
           </Button>
+        </motion.div>
+
+        {/* Social Media Icons */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex justify-center items-center gap-4 mt-8"
+        >
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="#"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <Facebook className="w-5 h-5" />
+          </motion.a>
+          
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="#"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <Instagram className="w-5 h-5" />
+          </motion.a>
+          
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="#"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <Twitter className="w-5 h-5" />
+          </motion.a>
+          
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="#"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <Linkedin className="w-5 h-5" />
+          </motion.a>
+          
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="#"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <Youtube className="w-5 h-5" />
+          </motion.a>
         </motion.div>
       </div>
 
@@ -152,4 +207,8 @@ export function VideoHero() {
       </motion.div>
     </section>
   );
-}
+});
+
+VideoHeroComponent.displayName = 'VideoHero';
+
+export const VideoHero = VideoHeroComponent;

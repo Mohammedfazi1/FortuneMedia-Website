@@ -180,12 +180,12 @@ const services = [
   }
 ];
 
-export function Services() {
+const ServicesComponent = React.memo(() => {
   const [expandedService, setExpandedService] = useState<string | null>(null);
 
-  const toggleService = (serviceId: string) => {
-    setExpandedService(expandedService === serviceId ? null : serviceId);
-  };
+  const toggleService = React.useCallback((serviceId: string) => {
+    setExpandedService(prev => prev === serviceId ? null : serviceId);
+  }, []);
 
   return (
     <section className="py-16 md:py-24 bg-white min-h-screen">
@@ -269,6 +269,7 @@ export function Services() {
                                   src={service.image}
                                   alt={service.title}
                                   className="w-full h-64 lg:h-80 object-cover rounded-lg"
+                                  loading="lazy"
                                 />
                               </div>
 
@@ -364,4 +365,8 @@ export function Services() {
       </div>
     </section>
   );
-}
+});
+
+ServicesComponent.displayName = 'Services';
+
+export const Services = ServicesComponent;

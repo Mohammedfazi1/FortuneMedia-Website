@@ -84,14 +84,14 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: 3,
     title: "Premium Brand Positioning",
-    client: "Furtune Financial",
+    client: "Forchune Financial",
     category: "Gantry Arch Campaign",
     heroMedia: {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1669348141071-9eae9ac4224e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwc2t5bGluZSUyMGJ1c2luZXNzJTIwZGlzdHJpY3R8ZW58MXx8fHwxNzU4MTA1MjU5fDA&ixlib=rb-4.1.0&q=80&w=1080'
     },
     description: "Strategic gantry arch placement to establish premium brand presence for financial services across major business corridors.",
-    problem: "Furtune Financial needed to establish trust and premium positioning in the competitive financial services market.",
+    problem: "Forchune Financial needed to establish trust and premium positioning in the competitive financial services market.",
     solution: "Premium gantry arch installations on business expressways with sophisticated design elements that convey trust and reliability.",
     deliverables: [
       "8 premium gantry arch installations",
@@ -140,7 +140,7 @@ const portfolioItems: PortfolioItem[] = [
   }
 ];
 
-export function Portfolio() {
+const PortfolioComponent = React.memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [userInteracted, setUserInteracted] = useState(false);
@@ -285,6 +285,8 @@ export function Portfolio() {
               src={currentItem.heroMedia.src}
               alt={currentItem.title}
               className="w-full h-full object-cover"
+              loading="lazy"
+              fetchPriority="low"
             />
             <div className="absolute inset-0 bg-black/50" />
           </div>
@@ -410,4 +412,8 @@ export function Portfolio() {
       </div>
     </section>
   );
-}
+});
+
+PortfolioComponent.displayName = 'Portfolio';
+
+export const Portfolio = PortfolioComponent;

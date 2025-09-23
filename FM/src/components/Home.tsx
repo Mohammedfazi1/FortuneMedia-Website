@@ -5,7 +5,8 @@ import { VideoHero } from './VideoHero';
 const ImageSlider = lazy(() => import('./ImageSlider').then(module => ({ default: module.ImageSlider })));
 const LandingPage = lazy(() => import('./LandingPage').then(module => ({ default: module.LandingPage })));
 const OurClients = lazy(() => import('./OurClients').then(module => ({ default: module.OurClients })));
-const Testimonials = lazy(() => import('./Testimonals').then(module => ({ default: module.Testimonials })));
+const Testimonials = lazy(() => import('./Testimonials').then(module => ({ default: module.Testimonials })));
+
 
 const HomeComponent = React.memo(() => {
   const LoadingSkeleton = () => (

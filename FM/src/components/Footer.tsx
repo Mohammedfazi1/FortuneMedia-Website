@@ -242,42 +242,10 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
         </div>
 
         {/* Newsletter signup */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="bg-gray-800 rounded-lg p-6 mb-8"
-        >
-          <div className="md:flex md:items-center md:justify-between">
-            <div className="mb-4 md:mb-0">
-              <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
-              <p className="text-gray-300">
-                Get the latest marketing insights and campaign updates delivered to your inbox.
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-3 md:flex-shrink-0">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-              <Button className="bg-primary hover:bg-primary/90 text-white">
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </motion.div>
+       
 
         {/* Bottom section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="border-t border-gray-800 pt-8"
-        >
+        <motion.div>
           <div className="md:flex md:items-center md:justify-between">
             {/* Copyright */}
             <div className="mb-4 md:mb-0">

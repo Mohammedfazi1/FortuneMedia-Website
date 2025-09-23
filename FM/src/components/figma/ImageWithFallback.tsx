@@ -19,7 +19,7 @@ export function ImageWithFallback(props: ImageWithFallbackProps) {
   // Convert fetchPriority to the correct HTML attribute
   const imgProps = {
     ...rest,
-    ...(fetchPriority && { fetchpriority: fetchPriority })
+    ...(fetchPriority && { fetchPriority: fetchPriority })
   }
 
   return didError ? (

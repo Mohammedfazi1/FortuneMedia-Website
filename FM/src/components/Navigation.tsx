@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface NavigationProps {
@@ -19,15 +19,20 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
     { id: 'contact', label: 'Contact Us' }
   ];
 
-  // Determine if we need dark theme (for white background pages)
+  const socialLinks = [
+    { id: 'facebook', icon: <Facebook className="h-5 w-5" />, url: 'https://facebook.com' },
+    { id: 'instagram', icon: <Instagram className="h-5 w-5" />, url: 'https://instagram.com' },
+    { id: 'twitter', icon: <Twitter className="h-5 w-5" />, url: 'https://twitter.com' },
+    { id: 'linkedin', icon: <Linkedin className="h-5 w-5" />, url: 'https://linkedin.com' },
+  ];
+
+  // Dark theme logic
   const needsDarkTheme = currentPage === 'services' || currentPage === 'contact' || isScrolled;
-  const isHomePage = currentPage === 'home';
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -68,7 +73,7 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-6">
             <div className="ml-10 flex items-baseline space-x-8">
               {navItems.map((item) => (
                 <motion.button
@@ -88,6 +93,23 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
                 >
                   {item.label}
                 </motion.button>
+              ))}
+            </div>
+
+            {/* Social Icons (Desktop) */}
+            <div className="flex items-center space-x-4 ml-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.id}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`transition-colors ${
+                    needsDarkTheme ? 'text-gray-600 hover:text-primary' : 'text-white hover:text-primary'
+                  }`}
+                >
+                  {social.icon}
+                </a>
               ))}
             </div>
           </div>
@@ -118,7 +140,7 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-t border-gray-200 shadow-lg overflow-hidden"
-            style={{ maxHeight: isOpen ? '300px' : '0px' }}
+            style={{ maxHeight: isOpen ? '400px' : '0px' }}
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-w-full">
               {navItems.map((item) => (
@@ -135,6 +157,21 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
                   {item.label}
                 </motion.button>
               ))}
+
+              {/* Social Icons (Mobile) */}
+              <div className="flex items-center justify-center space-x-6 pt-4 border-t border-gray-200">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.id}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-primary"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}

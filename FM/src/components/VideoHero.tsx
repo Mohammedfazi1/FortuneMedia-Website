@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, Facebook, Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Play, Pause, } from 'lucide-react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
@@ -112,60 +112,7 @@ const VideoHeroComponent = React.memo(() => {
             Learn More
           </Button>
         </motion.div>
-
-        {/* Social Media Icons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex justify-center items-center gap-4 mt-8"
-        >
-          <motion.a
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            href="#"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-          >
-            <Facebook className="w-5 h-5" />
-          </motion.a>
-          
-          <motion.a
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            href="#"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-          >
-            <Instagram className="w-5 h-5" />
-          </motion.a>
-          
-          <motion.a
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            href="#"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-          >
-            <Twitter className="w-5 h-5" />
-          </motion.a>
-          
-          <motion.a
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            href="#"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-          >
-            <Linkedin className="w-5 h-5" />
-          </motion.a>
-          
-          <motion.a
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            href="#"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-          >
-            <Youtube className="w-5 h-5" />
-          </motion.a>
-        </motion.div>
-      </div>
+       </div> 
 
       {/* Video Controls */}
       {!showPoster && (

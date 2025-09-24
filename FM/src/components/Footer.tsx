@@ -58,6 +58,12 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Wrap navigation with scroll
+  const handleNavigation = (page: string) => {
+    onNavigate(page);
+    scrollToTop();
+  };
+
   // Compact footer for portfolio page
   if (variant === 'compact') {
     return (
@@ -186,7 +192,7 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
               {footerLinks.services.map((service) => (
                 <li key={service}>
                   <button
-                    onClick={() => onNavigate('services')}
+                    onClick={() => handleNavigation('services')}
                     className="text-gray-300 hover:text-primary transition-colors text-left"
                   >
                     {service}
@@ -208,7 +214,7 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
               {footerLinks.company.map((link) => (
                 <li key={link}>
                   <button
-                    onClick={() => onNavigate('home')}
+                    onClick={() => handleNavigation('home')}
                     className="text-gray-300 hover:text-primary transition-colors text-left"
                   >
                     {link}
@@ -230,7 +236,7 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
               {footerLinks.support.map((link) => (
                 <li key={link}>
                   <button
-                    onClick={() => onNavigate('contact')}
+                    onClick={() => handleNavigation('contact')}
                     className="text-gray-300 hover:text-primary transition-colors text-left"
                   >
                     {link}
@@ -240,9 +246,6 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
             </ul>
           </motion.div>
         </div>
-
-        {/* Newsletter signup */}
-       
 
         {/* Bottom section */}
         <motion.div>

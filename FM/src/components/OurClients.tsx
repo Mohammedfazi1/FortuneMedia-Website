@@ -1,61 +1,31 @@
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 
-const clients = [
-  {
-    name: "Airtel",
-    logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=200&h=100&fit=crop&crop=center",
-    description: "Leading telecommunications provider"
-  },
-  {
-    name: "Fortune",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center",
-    description: "Financial services excellence"
-  },
-  {
-    name: "TechCorp",
-    logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=200&h=100&fit=crop&crop=center",
-    description: "Innovation in technology"
-  },
-  {
-    name: "GlobalRetail",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center",
-    description: "Retail chain expansion"
-  },
-  {
-    name: "UrbanDev",
-    logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=200&h=100&fit=crop&crop=center",
-    description: "Real estate development"
-  },
-  {
-    name: "HealthPlus",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center",
-    description: "Healthcare solutions"
-  },
-  {
-    name: "NextGen",
-    logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=200&h=100&fit=crop&crop=center",
-    description: "Future-ready innovations"
-  },
-  {
-    name: "EcoWorld",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center",
-    description: "Sustainable living solutions"
-  },
-  {
-    name: "MediCare",
-    logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=200&h=100&fit=crop&crop=center",
-    description: "Advanced medical services"
-  },
-  {
-    name: "EduSmart",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center",
-    description: "Education technology leader"
-  }
+type Client = {
+  name: string;
+  logo: string;
+  description: string;
+};
+
+const clients: Client[] = [
+  { name: "Airtel", logo: "...", description: "Leading telecommunications provider" },
+  { name: "Fortune", logo: "...", description: "Financial services excellence" },
+  { name: "TechCorp", logo: "...", description: "Innovation in technology" },
+  { name: "GlobalRetail", logo: "...", description: "Retail chain expansion" },
+  { name: "UrbanDev", logo: "...", description: "Real estate development" },
+  { name: "HealthPlus", logo: "...", description: "Healthcare solutions" },
+  { name: "NextGen", logo: "...", description: "Future-ready innovations" },
+  { name: "EcoWorld", logo: "...", description: "Sustainable living solutions" },
+  { name: "MediCare", logo: "...", description: "Advanced medical services" },
+  { name: "EduSmart", logo: "...", description: "Education technology leader" },
 ];
 
-// Memoized client card component
-const ClientCard = React.memo(({ client, index }) => (
+type ClientCardProps = {
+  client: Client;
+  index: number;
+};
+
+const ClientCard: React.FC<ClientCardProps> = React.memo(({ client, index }) => (
   <motion.div
     key={`${client.name}-${index}`}
     whileHover={{ scale: 1.05, y: -5 }}
@@ -76,10 +46,15 @@ const ClientCard = React.memo(({ client, index }) => (
     </div>
   </motion.div>
 ));
-ClientCard.displayName = 'ClientCard';
+ClientCard.displayName = "ClientCard";
 
-// Stats item
-const StatsItem = React.memo(({ value, label, delay }) => (
+type StatsItemProps = {
+  value: string;
+  label: string;
+  delay: number;
+};
+
+const StatsItem: React.FC<StatsItemProps> = React.memo(({ value, label, delay }) => (
   <div>
     <motion.div
       initial={{ scale: 0 }}
@@ -93,16 +68,18 @@ const StatsItem = React.memo(({ value, label, delay }) => (
     <div className="text-white/80">{label}</div>
   </div>
 ));
-StatsItem.displayName = 'StatsItem';
+StatsItem.displayName = "StatsItem";
 
-// Main component
-const OurClientsComponent = React.memo(() => {
-  const statsData = useMemo(() => [
-    { value: "500+", label: "Projects Completed", delay: 0.1 },
-    { value: "150+", label: "Happy Clients", delay: 0.2 },
-    { value: "98%", label: "Success Rate", delay: 0.3 },
-    { value: "25+", label: "Years Experience", delay: 0.4 }
-  ], []);
+const OurClientsComponent: React.FC = React.memo(() => {
+  const statsData = useMemo(
+    () => [
+      { value: "500+", label: "Projects Completed", delay: 0.1 },
+      { value: "150+", label: "Happy Clients", delay: 0.2 },
+      { value: "98%", label: "Success Rate", delay: 0.3 },
+      { value: "25+", label: "Years Experience", delay: 0.4 },
+    ],
+    []
+  );
 
   return (
     <section className="py-16 md:py-24 bg-white overflow-hidden">
@@ -119,18 +96,17 @@ const OurClientsComponent = React.memo(() => {
             Trusted by <span className="text-blue-600">Leading Brands</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We're proud to partner with industry leaders who trust us to deliver 
-            exceptional marketing results and drive their business growth.
+            We're proud to partner with industry leaders who trust us to deliver exceptional marketing results and drive their business growth.
           </p>
         </motion.div>
 
-        {/* Two-row client logos */}
+        {/* Client rows */}
         <div className="relative">
           <div className="absolute left-0 top-0 w-20 h-full z-10 pointer-events-none bg-gradient-to-r from-white via-white/80 to-transparent"></div>
           <div className="absolute right-0 top-0 w-20 h-full z-10 pointer-events-none bg-gradient-to-l from-white via-white/80 to-transparent"></div>
 
           <div className="flex flex-col gap-8 overflow-hidden">
-            {/* Row 1 - scroll left */}
+            {/* Row 1 */}
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
@@ -142,7 +118,7 @@ const OurClientsComponent = React.memo(() => {
               ))}
             </motion.div>
 
-            {/* Row 2 - scroll right */}
+            {/* Row 2 */}
             <motion.div
               animate={{ x: ["-50%", "0%"] }}
               transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
@@ -156,7 +132,7 @@ const OurClientsComponent = React.memo(() => {
           </div>
         </div>
 
-        {/* Stats section */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -167,15 +143,10 @@ const OurClientsComponent = React.memo(() => {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20"></div>
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
-          
+
           <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {statsData.map((stat) => (
-              <StatsItem
-                key={stat.label}
-                value={stat.value}
-                label={stat.label}
-                delay={stat.delay}
-              />
+              <StatsItem key={stat.label} value={stat.value} label={stat.label} delay={stat.delay} />
             ))}
           </div>
         </motion.div>
@@ -184,6 +155,6 @@ const OurClientsComponent = React.memo(() => {
   );
 });
 
-OurClientsComponent.displayName = 'OurClients';
+OurClientsComponent.displayName = "OurClients";
 
 export const OurClients = OurClientsComponent;

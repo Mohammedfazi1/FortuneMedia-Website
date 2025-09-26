@@ -1,401 +1,185 @@
-"use client";
+import { motion } from 'framer-motion';
+import { Settings, Monitor, Sparkles, Code, Palette, Rocket } from 'lucide-react';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-
-interface PortfolioItem {
-  id: number;
-  title: string;
-  client: string;
-  category: string;
-  heroMedia: {
-    type: 'image' | 'video';
-    src: string;
-    poster?: string;
-  };
-  description: string;
-  problem: string;
-  solution: string;
-  deliverables: string[];
-  results: string[];
-  mockups: string[];
-}
-
-const portfolioItems: PortfolioItem[] = [
-  {
-    id: 1,
-    title: "Digital Highway Revolution",
-    client: "Airtel",
-    category: "LED Display Campaign",
-    heroMedia: {
-      type: 'image',
-      src: 'https://images.unsplash.com/photo-1585504303098-9785dc784742?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWQlMjBkaXNwbGF5JTIwZGlnaXRhbCUyMGFkdmVydGlzaW5nfGVufDF8fHx8MTc1ODEwNTI1OHww&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    description: "A comprehensive LED display campaign across major highways to boost brand visibility and customer acquisition.",
-    problem: "Airtel needed to increase brand awareness in competitive telecommunications market while reaching commuters during peak traffic hours.",
-    solution: "Strategic placement of high-resolution LED displays on major highways with dynamic content that changes based on time of day and traffic patterns.",
-    deliverables: [
-      "15 LED displays across highways",
-      "Dynamic content management system",
-      "Real-time analytics dashboard",
-      "24/7 monitoring and support"
-    ],
-    results: [
-      "300% increase in brand recall",
-      "45% boost in new customer acquisition",
-      "2.5M daily impressions",
-      "ROI of 350%"
-    ],
-    mockups: [
-      'https://images.unsplash.com/photo-1613053745430-553b050dd3ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvdXRkb29yJTIwYWR2ZXJ0aXNpbmclMjBiaWxsYm9hcmR8ZW58MXx8fHwxNzU4MDAxMjI1fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      'https://images.unsplash.com/photo-1669348141071-9eae9ac4224e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwc2t5bGluZSUyMGJ1c2luZXNzJTIwZGlzdHJpY3R8ZW58MXx8fHwxNzU4MTA1MjU5fDA&ixlib=rb-4.1.0&q=80&w=1080'
-    ]
-  },
-  {
-    id: 2,
-    title: "Urban Mobility Marketing",
-    client: "TechCorp",
-    category: "Rickshaw Advertising",
-    heroMedia: {
-      type: 'image',
-      src: 'https://images.unsplash.com/photo-1716703742287-2b06c3c6d81a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXJrZXRpbmclMjBhZ2VuY3klMjB0ZWFtJTIwb2ZmaWNlfGVufDF8fHx8MTc1ODEwNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    description: "Mobile advertising campaign using rickshaw autotops to reach tech-savvy urban professionals in their daily commute.",
-    problem: "TechCorp struggled to reach young professionals in urban areas through traditional advertising mediums.",
-    solution: "Innovative rickshaw autotop advertising with QR codes and interactive elements targeting tech hubs and business districts.",
-    deliverables: [
-      "200 rickshaw autotop installations",
-      "GPS tracking system",
-      "QR code integration",
-      "Performance analytics"
-    ],
-    results: [
-      "150% increase in app downloads",
-      "85% improvement in brand recognition",
-      "50K+ QR code scans",
-      "ROI of 280%"
-    ],
-    mockups: [
-      'https://images.unsplash.com/photo-1707301280425-475534ec3cc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMG1lZXRpbmclMjBwcmVzZW50YXRpb258ZW58MXx8fHwxNzU4MDc0NjM2fDA&ixlib=rb-4.1.0&q=80&w=1080'
-    ]
-  },
-  {
-    id: 3,
-    title: "Premium Brand Positioning",
-    client: "Forchune Financial",
-    category: "Gantry Arch Campaign",
-    heroMedia: {
-      type: 'image',
-      src: 'https://images.unsplash.com/photo-1669348141071-9eae9ac4224e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwc2t5bGluZSUyMGJ1c2luZXNzJTIwZGlzdHJpY3R8ZW58MXx8fHwxNzU4MTA1MjU5fDA&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    description: "Strategic gantry arch placement to establish premium brand presence for financial services across major business corridors.",
-    problem: "Forchune Financial needed to establish trust and premium positioning in the competitive financial services market.",
-    solution: "Premium gantry arch installations on business expressways with sophisticated design elements that convey trust and reliability.",
-    deliverables: [
-      "8 premium gantry arch installations",
-      "Custom illumination design",
-      "Weather-resistant materials",
-      "Brand consistency guidelines"
-    ],
-    results: [
-      "400% increase in brand inquiries",
-      "60% boost in premium service uptake",
-      "95% positive brand perception",
-      "ROI of 450%"
-    ],
-    mockups: [
-      'https://images.unsplash.com/photo-1585504303098-9785dc784742?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWQlMjBkaXNwbGF5JTIwZGlnaXRhbCUyMGFkdmVydGlzaW5nfGVufDF8fHx8MTc1ODEwNTI1OHww&ixlib=rb-4.1.0&q=80&w=1080',
-      'https://images.unsplash.com/photo-1613053745430-553b050dd3ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvdXRkb29yJTIwYWR2ZXJ0aXNpbmclMjBiaWxsYm9hcmR8ZW58MXx8fHwxNzU4MDAxMjI1fDA&ixlib=rb-4.1.0&q=80&w=1080'
-    ]
-  },
-  {
-    id: 4,
-    title: "Retail Revolution Campaign",
-    client: "GlobalRetail",
-    category: "Center Median Advertising",
-    heroMedia: {
-      type: 'image',
-      src: 'https://images.unsplash.com/photo-1707301280425-475534ec3cc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMG1lZXRpbmclMjBwcmVzZW50YXRpb258ZW58MXx8fHwxNzU4MDc0NjM2fDA&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    description: "Strategic center median advertising campaign to drive footfall to retail locations during peak shopping seasons.",
-    problem: "GlobalRetail faced declining footfall in physical stores due to increased online shopping trends.",
-    solution: "Eye-catching center median displays with directional messaging and limited-time offers to drive immediate store visits.",
-    deliverables: [
-      "25 center median installations",
-      "Seasonal campaign designs",
-      "Traffic flow analysis",
-      "Store visit tracking"
-    ],
-    results: [
-      "200% increase in store footfall",
-      "75% boost in weekend sales",
-      "1.8M customer impressions",
-      "ROI of 320%"
-    ],
-    mockups: [
-      'https://images.unsplash.com/photo-1716703742287-2b06c3c6d81a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXJrZXRpbmclMjBhZ2VuY3klMjB0ZWFtJTIwb2ZmaWNlfGVufDF8fHx8MTc1ODEwNTI1N3ww&ixlib=rb-4.1.0&q=80&w=1080'
-    ]
-  }
-];
-
-const PortfolioComponent = React.memo(() => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [userInteracted, setUserInteracted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const resetAutoPlay = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    setUserInteracted(true);
-    setIsAutoPlaying(false);
-
-    timeoutRef.current = setTimeout(() => {
-      setUserInteracted(false);
-      setIsAutoPlaying(true);
-    }, 5000);
-  }, []);
-
-  // Auto-advance slides
-  useEffect(() => {
-    if (!isAutoPlaying || userInteracted) return;
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % portfolioItems.length);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, userInteracted]);
-
-  // Handle scroll/swipe navigation
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let startY = 0;
-    let isScrolling = false;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      startY = e.touches[0].clientY;
-      resetAutoPlay();
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isScrolling) return;
-
-      const endY = e.changedTouches[0].clientY;
-      const deltaY = startY - endY;
-
-      if (Math.abs(deltaY) > 50) {
-        if (deltaY > 0 && currentSlide < portfolioItems.length - 1) {
-          setCurrentSlide(prev => prev + 1);
-        } else if (deltaY < 0 && currentSlide > 0) {
-          setCurrentSlide(prev => prev - 1);
-        }
-      }
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling) return;
-
-      e.preventDefault();
-      resetAutoPlay();
-
-      isScrolling = true;
-      setTimeout(() => { isScrolling = false; }, 100);
-
-      if (e.deltaY > 0 && currentSlide < portfolioItems.length - 1) {
-        setCurrentSlide(prev => prev + 1);
-      } else if (e.deltaY < 0 && currentSlide > 0) {
-        setCurrentSlide(prev => prev - 1);
-      }
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      resetAutoPlay();
-
-      if (e.key === 'ArrowDown' && currentSlide < portfolioItems.length - 1) {
-        setCurrentSlide(prev => prev + 1);
-      } else if (e.key === 'ArrowUp' && currentSlide > 0) {
-        setCurrentSlide(prev => prev - 1);
-      }
-    };
-
-    container.addEventListener('touchstart', handleTouchStart);
-    container.addEventListener('touchend', handleTouchEnd);
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      container.removeEventListener('touchstart', handleTouchStart);
-      container.removeEventListener('touchend', handleTouchEnd);
-      container.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [currentSlide, resetAutoPlay]);
-
-  const currentItem = portfolioItems[currentSlide];
-
+const Portfolio = () => {
   return (
-    <section 
-      ref={containerRef}
-      className="h-screen w-full overflow-hidden bg-gray-900 relative"
-    >
-      {/* Slide indicator */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 space-y-3">
-        {portfolioItems.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setCurrentSlide(index);
-              resetAutoPlay();
-            }}
-            className={`block w-2 h-8 rounded-full transition-all duration-300 ${
-              index === currentSlide 
-                ? 'bg-white' 
-                : 'bg-white/30 hover:bg-white/60'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Main content */}
-      <AnimatePresence mode="wait">
-         <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -100 }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className="h-full w-full relative"
-        >
-          {/* Hero media background */}
-          <div className="absolute inset-0">
-            <ImageWithFallback
-              src={currentItem.heroMedia.src}
-              alt={currentItem.title}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              fetchPriority="low"
-            />
-            <div className="absolute inset-0 bg-black/50" />
-          </div>
-
-          {/* Content overlay */}
-          <div className="relative z-10 h-full flex items-center">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                {/* Left content */}
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="text-white"
-                >
-                  <div className="mb-4">
-                    <span className="inline-block bg-primary px-3 py-1 rounded-full text-sm font-medium">
-                      {currentItem.category}
-                    </span>
-                  </div>
-                  
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl mb-4">
-                    {currentItem.title}
-                  </h1>
-                  
-                  <p className="text-xl md:text-2xl text-white/90 mb-6">
-                    {currentItem.client}
-                  </p>
-                  
-                  <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                    {currentItem.description}
-                  </p>
-                  
-                  <Button 
-                    size="lg" 
-                    className="bg-primary hover:bg-primary/90 text-white group"
-                  >
-                    View Details
-                    <ExternalLink className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </motion.div>
-
-                {/* Right content - Project details */}
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="space-y-6"
-                >
-                  {/* Problem */}
-                  <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                    <CardContent className="p-6">
-                      <h3 className="text-lg font-semibold text-white mb-3">Problem</h3>
-                      <p className="text-white/80">{currentItem.problem}</p>
-                    </CardContent>
-                  </Card>
-
-                  {/* Solution */}
-                  <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                    <CardContent className="p-6">
-                      <h3 className="text-lg font-semibold text-white mb-3">Solution</h3>
-                      <p className="text-white/80">{currentItem.solution}</p>
-                    </CardContent>
-                  </Card>
-
-                  {/* Results */}
-                  <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                    <CardContent className="p-6">
-                      <h3 className="text-lg font-semibold text-white mb-3">Results</h3>
-                      <div className="grid grid-cols-2 gap-3">
-                        {currentItem.results.map((result, index) => (
-                          <div key={index} className="text-white/80 text-sm">
-                            • {result}
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+    <section className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-white pt-24 pb-16 overflow-y-auto">
+      <div className="flex flex-col items-center justify-center px-4 py-8">
+        <div className="text-center max-w-5xl mx-auto space-y-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8"
+          >
+            <div className="w-32 h-32 bg-gradient-to-br from-primary to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+              <Settings className="w-16 h-16 text-white animate-spin" style={{ animationDuration: '4s' }} />
+            </div>
+            <h1 className="text-6xl md:text-8xl font-black text-gray-900 mb-6 tracking-tight">
+              Portfolio
+            </h1>
+            <p className="text-3xl md:text-4xl text-gray-600 font-light mb-4">
+              Under Development
+            </p>
+            <div className="flex items-center justify-center gap-2 text-lg text-gray-500">
+              <Sparkles className="w-5 h-5" />
+              <span>Something amazing is coming</span>
+              <Sparkles className="w-5 h-5" />
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-white rounded-3xl p-12 border border-gray-200 shadow-xl mb-16"
+          >
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <Monitor className="w-8 h-8 text-primary" />
+              <h2 className="text-3xl font-bold text-gray-900">
+                Coming Soon
+              </h2>
+            </div>
+            <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-2xl mx-auto">
+              We're crafting an extraordinary portfolio experience to showcase our finest work. 
+              Expect cutting-edge design, innovative features, and stunning visuals.
+            </p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+                className="bg-green-50 rounded-2xl p-6 border border-green-200"
+              >
+                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Palette className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
+                <p className="text-green-700 font-semibold text-lg">Design</p>
+                <p className="text-green-600 text-sm">Complete</p>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.6 }}
+                className="bg-yellow-50 rounded-2xl p-6 border border-yellow-200"
+              >
+                <div className="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Code className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse mx-auto mb-3" />
+                <p className="text-yellow-700 font-semibold text-lg">Development</p>
+                <p className="text-yellow-600 text-sm">In Progress</p>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 }}
+                className="bg-blue-50 rounded-2xl p-6 border border-blue-200"
+              >
+                <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Monitor className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-3 h-3 bg-blue-300 rounded-full mx-auto mb-3" />
+                <p className="text-blue-700 font-semibold text-lg">Testing</p>
+                <p className="text-blue-600 text-sm">Upcoming</p>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8 }}
+                className="bg-purple-50 rounded-2xl p-6 border border-purple-200"
+              >
+                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Rocket className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-3 h-3 bg-purple-300 rounded-full mx-auto mb-3" />
+                <p className="text-purple-700 font-semibold text-lg">Launch</p>
+                <p className="text-purple-600 text-sm">Preparation</p>
+              </motion.div>
+            </div>
+          </motion.div>
+          
+          {/* Additional Features Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="bg-white rounded-3xl p-12 border border-gray-200 shadow-xl mb-16"
+          >
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">What to Expect</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 mb-3">Interactive Design</h4>
+                <p className="text-gray-600">Engaging animations and smooth transitions that bring our work to life</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Monitor className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 mb-3">Responsive Layout</h4>
+                <p className="text-gray-600">Perfect viewing experience across all devices and screen sizes</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Rocket className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 mb-3">Fast Performance</h4>
+                <p className="text-gray-600">Lightning-fast loading times with optimized images and code</p>
               </div>
             </div>
-          </div>
-
-          {/* Progress bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-20">
-            {isAutoPlaying && !userInteracted && (
-              <motion.div
-                key={`progress-${currentSlide}`}
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 8, ease: 'linear' }}
-                className="h-full bg-primary"
-              />
-            )}
-          </div>
-
-          {/* Slide counter */}
-          <div className="absolute bottom-8 left-8 z-20 text-white">
-            <span className="text-2xl font-bold">
-              {String(currentSlide + 1).padStart(2, '0')}
-            </span>
-            <span className="text-white/60"> / {String(portfolioItems.length).padStart(2, '0')}</span>
-          </div>
-        </motion.div>
-
-        {/* ... unchanged render code ... */}
-      </AnimatePresence>
+          </motion.div>
+          
+          {/* Timeline Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="bg-gradient-to-r from-primary to-blue-600 rounded-3xl p-12 text-white shadow-xl"
+          >
+            <h3 className="text-2xl font-bold mb-8 text-center">Development Timeline</h3>
+            <div className="grid md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">Q1</span>
+                </div>
+                <h4 className="font-semibold mb-2">Research & Planning</h4>
+                <p className="text-white/80 text-sm">User research, wireframing, and technical planning</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">Q2</span>
+                </div>
+                <h4 className="font-semibold mb-2">Design & Prototyping</h4>
+                <p className="text-white/80 text-sm">Visual design, prototyping, and user testing</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-yellow-400 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-gray-900 font-bold">Q3</span>
+                </div>
+                <h4 className="font-semibold mb-2">Development</h4>
+                <p className="text-white/80 text-sm">Frontend development and backend integration</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">Q4</span>
+                </div>
+                <h4 className="font-semibold mb-2">Launch</h4>
+                <p className="text-white/80 text-sm">Testing, optimization, and final launch</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
-});
+};
 
-PortfolioComponent.displayName = 'Portfolio';
-
-export const Portfolio = PortfolioComponent;
+export { Portfolio };

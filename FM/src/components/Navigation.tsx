@@ -27,7 +27,11 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
   ];
 
   // Dark theme logic
-  const needsDarkTheme = currentPage === 'services' || currentPage === 'contact' || isScrolled;
+  const needsDarkTheme =
+  currentPage === 'services' ||
+  currentPage === 'contact' ||
+  currentPage === 'portfolio' || // 👈 add this line
+  isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {

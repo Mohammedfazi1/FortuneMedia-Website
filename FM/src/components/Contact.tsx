@@ -176,39 +176,52 @@ const handleSubmit = async (e: React.FormEvent) => {
               </div>
             </div>
 
-            {/* Map */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <Card className="overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="h-64 bg-gray-200 relative">
-                    {/* Embedded Map Placeholder */}
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.116645147!2d72.74109995709994!3d19.082502010966997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1647875235234!5m2!1sen!2sin"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Furtune Media Location"
-                      className="rounded-lg"
-                    />
-                    
-                    {/* Fallback for map */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                      <div className="text-center text-primary">
-                        <MapPin className="h-8 w-8 mx-auto mb-2" />
-                        <p className="font-semibold">Visit Our Office</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+        
+{/* Map */}
+<motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+>
+  <Card className="overflow-hidden">
+    <CardContent className="p-0">
+      <div className="h-64 bg-gray-200 relative group rounded-lg">
+        {/* Clickable overlay */}
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=Fortune+Media+%26+Trading+Company,+Madurai"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 z-10"
+        >
+          <span className="sr-only">Get Directions</span>
+        </a>
+
+        {/* Embedded Map */}
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.6549254158977!2d78.1113314745076!3d9.91465697449849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c5002d47613b%3A0x1e1da138268a747e!2sFortune%20Media%20%26%20Trading%20Company!5e1!3m2!1sen!2sin!4v1758880441724!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Fortune Media Location"
+          className="rounded-lg pointer-events-none"
+        />
+
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="text-white text-center">
+            <MapPin className="h-8 w-8 mx-auto mb-2" />
+            <p className="font-semibold">Get Directions</p>
+          </div>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+</motion.div>
+
+
           </motion.div>
 
           {/* Contact Form */}

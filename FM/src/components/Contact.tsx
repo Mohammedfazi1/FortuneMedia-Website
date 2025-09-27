@@ -196,18 +196,19 @@ const handleSubmit = async (e: React.FormEvent) => {
           <span className="sr-only">Get Directions</span>
         </a>
 
-        {/* Embedded Map */}
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.6549254158977!2d78.1113314745076!3d9.91465697449849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c5002d47613b%3A0x1e1da138268a747e!2sFortune%20Media%20%26%20Trading%20Company!5e1!3m2!1sen!2sin!4v1758880441724!5m2!1sen!2sin"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Fortune Media Location"
-          className="rounded-lg pointer-events-none"
-        />
+       {/* Embedded Map */}
+<iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.772471829166!2d78.11390639999999!3d9.914651699999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c5002d47613b%3A0x1e1da138268a747e!2sFortune%20Media%20%26%20Trading%20Company!5e1!3m2!1sen!2sin!4v1758953551927!5m2!1sen!2sin"
+  width="100%"
+  height="100%"
+  style={{ border: 0 }}
+  allowFullScreen
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  title="Fortune Media Location"
+  className="rounded-lg pointer-events-none"
+/>
+
 
         {/* Hover Overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">

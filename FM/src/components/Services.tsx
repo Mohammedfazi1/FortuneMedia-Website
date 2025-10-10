@@ -232,7 +232,13 @@ const ServicesComponent = React.memo(() => {
                       onClick={() => toggleService(service.id)}
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <ImageWithFallback
+                          src={service.image}
+                          alt={service.title}
+                          className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                          loading="lazy"
+                        />
+                        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                           <Icon className="h-6 w-6 text-primary" />
                         </div>
                         <div>
@@ -251,7 +257,6 @@ const ServicesComponent = React.memo(() => {
                         <ChevronDown className="h-5 w-5 text-gray-400" />
                       </motion.div>
                     </div>
-
                     {/* Expanded content */}
                     <AnimatePresence>
                       {isExpanded && (

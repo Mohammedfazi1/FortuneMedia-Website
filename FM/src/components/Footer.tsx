@@ -163,18 +163,18 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-gray-300">
-                    123 Business District, Mumbai, Maharashtra 400001
+                    EMERALD APARTMENTS, 3RD FLOOR, BEHIND KTM CHAMBERS, 19 WHEAT CROFT ROAD, NUNGAMBAKKAM, CHENNAI 600 034
                   </span>
                 </div>
                 
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-gray-300">+91 98765 43210</span>
+                  <span className="text-gray-300">9840055603</span>
                 </div>
                 
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-gray-300">hello@fortunemedia.com</span>
+                  <span className="text-gray-300">mustafa.fmtc@gmail.com</span>
                 </div>
               </div>
             </motion.div>

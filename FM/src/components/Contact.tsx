@@ -24,19 +24,19 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Address',
-    details: 'Madurai,TamilNadu, India',
+    details: 'FORTUNE MEDIA & TRADING CO.\nEMERALD APARTMENTS, 3RD FLOOR\nBEHIND KTM CHAMBERS, 19 WHEAT CROFT ROAD,\nNUNGAMBAKKAM, CHENNAI 600 034',
     color: 'text-blue-500'
   },
   {
     icon: Phone,
     title: 'Phone',
-    details: '+91 98765 43210',
+    details: '9840055603',
     color: 'text-green-500'
   },
   {
     icon: Mail,
     title: 'Email',
-    details: 'Fortunemedia@gmail.com',
+    details: 'mustafa.fmtc@gmail.com',
     color: 'text-red-500'
   },
   {
@@ -405,11 +405,11 @@ const handleSubmit = async (e: React.FormEvent) => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="outline" className="group">
               <Phone className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Call Now: +91 98765 43210
+              Call Now: 9840055603
             </Button>
             <Button size="lg" variant="outline" className="group">
               <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Email: hello@furtunemedia.com
+              Email: mustafa.fmtc@gmail.com
             </Button>
           </div>
         </motion.div>

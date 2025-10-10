@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, Suspense, lazy } from 'react';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Lazy load components for better performance
 const Home = lazy(() => import('./components/Home').then(module => ({ default: module.Home })));
@@ -94,6 +95,7 @@ export default function App() {
       
       {/* Footer - Show on all pages with different variants */}
       <Footer onNavigate={handleNavigate} variant={footerVariant} />
+       <SpeedInsights />
     </div>
   );
 }

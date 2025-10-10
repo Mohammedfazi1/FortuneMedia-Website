@@ -72,12 +72,11 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Logo and copyright */}
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">F</span>
-                </div>
-                <span className="font-semibold">Fortune Media</span>
-              </div>
+              <img
+                src="/assets/Fortune-Logo.png"
+                alt="Fortune Media"
+                className="h-8 w-auto"
+              />
               <span className="text-gray-400 text-sm hidden sm:block">© 2024 All rights reserved.</span>
             </div>
 
@@ -146,11 +145,12 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
               viewport={{ once: true }}
             >
               {/* Logo */}
-              <div className="flex items-center space-x-2 mb-6">
-                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">F</span>
-                </div>
-                <span className="text-xl font-bold">Fortune Media</span>
+              <div className="mb-6">
+                <img
+                  src="/assets/Fortune-Logo.png"
+                  alt="Fortune Media"
+                  className="h-12 w-auto"
+                />
               </div>
 
               <p className="text-gray-300 mb-6 leading-relaxed">

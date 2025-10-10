@@ -64,16 +64,11 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
             className="flex-shrink-0 cursor-pointer"
             onClick={() => handleNavClick('home')}
           >
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white text-sm font-bold">F</span>
-              </div>
-              <span className={`text-lg font-bold transition-colors ${
-                needsDarkTheme ? 'text-primary' : 'text-white'
-              }`}>
-                Fortune Media
-              </span>
-            </div>
+            <img
+              src="/assets/Fortune-Logo.png"
+              alt="Fortune Media"
+              className="h-10 w-auto"
+            />
           </motion.div>
 
           {/* Desktop Navigation */}

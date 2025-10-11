@@ -20,9 +20,9 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
   ];
 
   const socialLinks = [
-    { id: 'facebook', icon: <Facebook className="h-5 w-5" />, url: 'https://facebook.com' },
-    { id: 'instagram', icon: <Instagram className="h-5 w-5" />, url: 'https://instagram.com' },
-    { id: 'twitter', icon: <Twitter className="h-5 w-5" />, url: 'https://twitter.com' },
+    { id: 'facebook', icon: <Facebook className="h-5 w-5" />, url: 'https://www.facebook.com/profile.php?id=61581897277789' },
+    { id: 'instagram', icon: <Instagram className="h-5 w-5" />, url: 'https://www.instagram.com/fmtcsocial/' },
+    { id: 'twitter', icon: <Twitter className="h-5 w-5" />, url: 'https://x.com/FmtcSocial68566' },
     { id: 'linkedin', icon: <Linkedin className="h-5 w-5" />, url: 'https://linkedin.com' },
   ];
 

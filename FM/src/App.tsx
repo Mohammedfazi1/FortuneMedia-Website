@@ -39,7 +39,7 @@ export default function App() {
       case 'home':
         return (
           <Suspense fallback={<LoadingSpinner />}>
-            <Home />
+            <Home onNavigate={handleNavigate} />
           </Suspense>
         );
       case 'services':
@@ -63,7 +63,7 @@ export default function App() {
       default:
         return (
           <Suspense fallback={<LoadingSpinner />}>
-            <Home />
+            <Home onNavigate={handleNavigate} />
           </Suspense>
         );
     }

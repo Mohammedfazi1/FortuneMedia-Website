@@ -403,13 +403,17 @@ const handleSubmit = async (e: React.FormEvent) => {
             Prefer to talk directly?
           </h3>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="group">
-              <Phone className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Call Now: 9840055603
+            <Button size="lg" variant="outline" className="group" asChild>
+              <a href="tel:+919840055603">
+                <Phone className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                Call Now: 9840055603
+              </a>
             </Button>
-            <Button size="lg" variant="outline" className="group">
-              <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Email: mustafa.fmtc@gmail.com
+            <Button size="lg" variant="outline" className="group" asChild>
+              <a href="mailto:mustafa.fmtc@gmail.com">
+                <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                Email: mustafa.fmtc@gmail.com
+              </a>
             </Button>
           </div>
         </motion.div>

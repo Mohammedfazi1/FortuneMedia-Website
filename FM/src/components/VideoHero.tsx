@@ -4,7 +4,12 @@ import { Play, Pause, } from 'lucide-react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
-const VideoHeroComponent = React.memo(() => {
+interface VideoHeroProps {
+  onNavigate: (page: string) => void;
+}
+
+
+const VideoHeroComponent = React.memo(({ onNavigate }: VideoHeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [showPoster, setShowPoster] = React.useState(true);
@@ -99,17 +104,19 @@ const VideoHeroComponent = React.memo(() => {
         >
           <Button
             size="lg"
+            onClick={() => onNavigate('contact')}
             className=" text-white bg-black hover:bg-white hover:text-black px-8 py-3 text-lg"
           >
-            Get Started
+            Get in Touch
           </Button>
           
           <Button
             variant="outline"
             size="lg"
+            onClick={() => onNavigate('portfolio')}
             className="border-white text-white hover:bg-white hover:text-black px-8 py-3 text-lg"
           >
-            Learn More
+            About us
           </Button>
         </motion.div>
        </div> 

@@ -184,7 +184,7 @@ const ServicesComponent = React.memo(() => {
   const [expandedService, setExpandedService] = useState<string | null>(null);
 
   const toggleService = React.useCallback((serviceId: string) => {
-    setExpandedService(prev => prev === serviceId ? null : serviceId);
+    setExpandedService((prev: string | null) => prev === serviceId ? null : serviceId);
   }, []);
 
   return (

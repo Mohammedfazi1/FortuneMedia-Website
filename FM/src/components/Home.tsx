@@ -8,7 +8,11 @@ const OurClients = lazy(() => import('./OurClients').then(module => ({ default: 
 const Testimonials = lazy(() => import('./Testimonials').then(module => ({ default: module.Testimonials })));
 
 
-const HomeComponent = React.memo(() => {
+interface HomeProps {
+  onNavigate: (page: string) => void;
+}
+
+const HomeComponent = React.memo(({ onNavigate }: HomeProps) => {
   const LoadingSkeleton = () => (
     <div className="w-full h-64 bg-gray-200 animate-pulse rounded-lg mx-4 my-8"></div>
   );
@@ -16,7 +20,7 @@ const HomeComponent = React.memo(() => {
   return (
     <div className="w-full overflow-x-hidden">
       {/* Video Background Hero Section - Critical, load immediately */}
-      <VideoHero />
+      <VideoHero onNavigate={onNavigate} />
       
       {/* Image Slider Section - Lazy loaded */}
       <Suspense fallback={<LoadingSkeleton />}>

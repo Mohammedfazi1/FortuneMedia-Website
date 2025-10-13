@@ -42,10 +42,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' }
+  { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61581897277789', label: 'Facebook' },
+  { icon: Twitter, href: 'https://x.com/FmtcSocial68566', label: 'Twitter' },
+  { icon: Instagram, href: 'https://www.instagram.com/fmtcsocial/', label: 'Instagram' },
+  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' }
 ];
 
 interface FooterProps {
@@ -169,12 +169,24 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
                 
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-gray-300">9840055603</span>
+                  <a 
+                    href="https://wa.me/919840055603" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-primary transition-colors"
+                  >
+                    9840055603
+                  </a>
                 </div>
                 
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-gray-300">mustafa.fmtc@gmail.com</span>
+                  <a 
+                    href="mailto:mustafa.fmtc@gmail.com"
+                    className="text-gray-300 hover:text-primary transition-colors"
+                  >
+                    mustafa.fmtc@gmail.com
+                  </a>
                 </div>
               </div>
             </motion.div>

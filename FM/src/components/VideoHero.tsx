@@ -4,6 +4,14 @@ import { Play, Pause, } from 'lucide-react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+// Import Montserrat font
+if (typeof document !== 'undefined') {
+  const link = document.createElement('link');
+  link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap';
+  link.rel = 'stylesheet';
+  document.head.appendChild(link);
+}
+
 interface VideoHeroProps {
   onNavigate: (page: string) => void;
 }

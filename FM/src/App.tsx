@@ -23,7 +23,10 @@ export default function App() {
   }, []);
 
   const handleNavigate = useCallback((page: string) => {
-    if (page === currentPage) return; // Prevent unnecessary re-renders
+    if (page === currentPage) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);

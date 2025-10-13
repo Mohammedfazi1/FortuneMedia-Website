@@ -175,7 +175,7 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
                     rel="noopener noreferrer"
                     className="text-gray-300 hover:text-primary transition-colors"
                   >
-                    9840055603
+                    +91 9840055603
                   </a>
                 </div>
                 

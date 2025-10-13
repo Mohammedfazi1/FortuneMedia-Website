@@ -3,7 +3,7 @@ import { Settings, Monitor, Sparkles, Code, Palette, Rocket } from 'lucide-react
 
 const Portfolio = () => {
   return (
-    <section className="py-16 md:py-24 bg-white min-h-screen">
+    <section className="pt-18 pb-16 md:pt-26 md:pb-24 bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

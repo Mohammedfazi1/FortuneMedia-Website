@@ -87,30 +87,28 @@ const ClientCardInner: React.FC<ClientCardProps> = ({ client, index }) => {
       key={`${client.name}-${index}`}
       whileHover={{ scale: 1.05, y: -5 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="group cursor-pointer flex-shrink-0 w-72"
+      className="group cursor-pointer flex-shrink-0 w-48 md:w-52"
     >
-      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl transition-shadow duration-300 h-full flex flex-col items-center justify-center text-center group-hover:border-blue-300">
-        <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col items-center justify-center text-center group-hover:border-blue-300">
+        <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
           {!imgError ? (
             <img
               src={logoSrc}
               alt={`${client.name} logo`}
-              className="w-full h-full object-contain p-2"
+              className="w-full h-full object-contain p-1"
               onError={handleError}
               loading="lazy"
             />
           ) : (
-            <span className="text-2xl font-bold text-blue-600">
+            <span className="text-lg md:text-xl font-bold text-blue-600">
               {client.name.charAt(0)}
             </span>
           )}
         </div>
 
-        <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-200">
+        <h3 className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 leading-tight">
           {client.name}
         </h3>
-        <p className="text-sm text-gray-600 leading-relaxed">{client.description}</p>
-        <div className="mt-4 w-8 h-1 bg-blue-100 rounded-full group-hover:bg-blue-600 group-hover:w-12 transition-all duration-200"></div>
       </div>
     </motion.div>
   );

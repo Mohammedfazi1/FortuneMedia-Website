@@ -28,7 +28,11 @@ export default function App() {
       return;
     }
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentPage]);
 
   const currentPageComponent = useMemo(() => {

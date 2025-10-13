@@ -30,7 +30,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Phone',
-    details: '9840055603',
+    details: '+91 9840055603',
     color: 'text-green-500'
   },
   {
@@ -124,7 +124,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+    <section className="pt-18 pb-16 md:pt-26 md:pb-24 bg-gradient-to-br from-gray-50 to-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -406,7 +406,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <Button size="lg" variant="outline" className="group" asChild>
               <a href="tel:+919840055603">
                 <Phone className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                Call Now: 9840055603
+                Call Now: +91 9840055603
               </a>
             </Button>
             <Button size="lg" variant="outline" className="group" asChild>

@@ -209,7 +209,6 @@ const ServicesComponent = React.memo(() => {
         {/* Services grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
-            const Icon = service.icon;
             const isExpanded = expandedService === service.id;
 
             return (

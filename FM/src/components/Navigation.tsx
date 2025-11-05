@@ -16,7 +16,7 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
     { id: 'home', label: 'Home' },
     { id: 'services', label: 'Our Services' },
     { id: 'portfolio', label: 'Portfolio' },
-    { id: 'contact', label: 'Contact Us' }
+    { id: 'contact', label: 'About Us' }
   ];
 
   const socialLinks = [
@@ -95,21 +95,47 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
               ))}
             </div>
 
-            {/* Social Icons (Desktop) */}
+           
+              
+              {/* Social Icons (Desktop) */}
+              <div className="flex items-center space-x-4 ml-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.id}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`transition-colors ${
+                      needsDarkTheme ? 'text-gray-600 hover:text-primary' : 'text-white hover:text-primary'
+                    }`}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+               {/* Get in Touch Button */}
             <div className="flex items-center space-x-4 ml-6">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.id}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`transition-colors ${
-                    needsDarkTheme ? 'text-gray-600 hover:text-primary' : 'text-white hover:text-primary'
-                  }`}
-                >
-                  {social.icon}
-                </a>
-              ))}
+              <Button
+                onClick={() => handleNavClick('contact')}
+                className="relative bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 text-white px-4 py-2 text-sm font-bold rounded-full shadow-lg animate-bounce hover:animate-pulse transition-all duration-300 border-2 border-white/20"
+                style={{
+                  animation: 'vibrate 0.3s linear infinite alternate, glow 2s ease-in-out infinite alternate'
+                }}
+              >
+                <span className="relative z-10">Get in Touch</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full blur-sm opacity-75 animate-ping"></div>
+              </Button>
+              
+              <style>{`
+                @keyframes vibrate {
+                  0% { transform: translateX(0); }
+                  100% { transform: translateX(2px); }
+                }
+                @keyframes glow {
+                  0% { box-shadow: 0 0 5px #ff6b6b, 0 0 10px #ff6b6b, 0 0 15px #ff6b6b; }
+                  100% { box-shadow: 0 0 10px #ffd93d, 0 0 20px #ffd93d, 0 0 30px #ffd93d; }
+                }
+              `}</style>
             </div>
           </div>
 

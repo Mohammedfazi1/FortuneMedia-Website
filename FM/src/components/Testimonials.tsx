@@ -10,7 +10,7 @@ const testimonials = [
     name: "Rajesh Kumar",
     position: "Marketing Director",
     company: "Airtel",
-    content: "Forchune Media transformed our brand presence with their innovative outdoor advertising campaigns. The ROI exceeded our expectations by 300%.",
+    content: "Fortune Media transformed our brand presence with their innovative outdoor advertising campaigns. The ROI exceeded our expectations by 300%.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
   },
@@ -28,7 +28,7 @@ const testimonials = [
     name: "Amit Patel",
     position: "Brand Manager",
     company: "GlobalRetail",
-    content: "Working with Forchune Media was a game-changer. Their comprehensive approach to outdoor advertising delivered results beyond our wildest dreams.",
+    content: "Working with Fortune Media was a game-changer. Their comprehensive approach to outdoor advertising delivered results beyond our wildest dreams.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
   },
@@ -37,7 +37,7 @@ const testimonials = [
     name: "Sneha Gupta",
     position: "Marketing Head",
     company: "UrbanDev",
-    content: "The creativity and professionalism of the Forchune Media team is unmatched. They turned our vision into reality with stunning visual campaigns.",
+    content: "The creativity and professionalism of the Fortune Media team is unmatched. They turned our vision into reality with stunning visual campaigns.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
   }

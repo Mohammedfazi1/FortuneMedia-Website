@@ -132,13 +132,16 @@ const VideoHeroComponent = React.memo(({ onNavigate }: VideoHeroProps) => {
                 className="relative"
                 whileHover={{ scale: 1.02 }}
               >
-                <Button
-                  size="sm"
-                  onClick={() => onNavigate('contact')}
-                  className="relative text-white bg-black hover:bg-white hover:text-black px-6 py-2 text-sm font-semibold border-2 border-blue-500 hover:border-green-400 transition-colors duration-300 rounded-sm"
-                >
-                  Get in Touch
-                </Button>
+               <Button
+                               onClick={() => onNavigate('contact')}
+                               className="relative bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 text-white px-4 py-2 text-sm font-bold rounded-full shadow-lg animate-bounce hover:animate-pulse transition-all duration-300 border-2 border-white/20"
+                               style={{
+                                 animation: 'vibrate 0.3s linear infinite alternate, glow 2s ease-in-out infinite alternate'
+                               }}
+                             >
+                               <span className="relative z-10">Get in Touch</span>
+                               <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full blur-sm opacity-75 animate-ping"></div>
+                             </Button>
               </motion.div>
               <Button
                 variant="outline"
@@ -190,21 +193,8 @@ const VideoHeroComponent = React.memo(({ onNavigate }: VideoHeroProps) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+            className="flex justify-center items-center mb-8"
           >
-            <Button
-              size="lg"
-              onClick={() => onNavigate('contact')}
-              className="relative text-white bg-black hover:bg-white hover:text-black px-8 py-3 text-lg font-semibold shadow-none border-2 border-transparent hover:border-yellow-400 transition-all duration-300 overflow-hidden"
-            >
-              <span className="absolute inset-0 border-2 border-yellow-400 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <span className="absolute top-0 left-0 w-full h-0.5 bg-yellow-400 animate-pulse"></span>
-                <span className="absolute bottom-0 right-0 w-full h-0.5 bg-yellow-400 animate-pulse" style={{animationDelay: '0.5s'}}></span>
-                <span className="absolute left-0 top-0 w-0.5 h-full bg-yellow-400 animate-pulse" style={{animationDelay: '1s'}}></span>
-                <span className="absolute right-0 bottom-0 w-0.5 h-full bg-yellow-400 animate-pulse" style={{animationDelay: '1.5s'}}></span>
-              </span>
-              Get in Touch
-            </Button>
             <Button
               variant="outline"
               size="lg"

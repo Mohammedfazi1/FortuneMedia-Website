@@ -1,150 +1,264 @@
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Monitor, Sparkles, Code, Palette, Rocket } from 'lucide-react';
+import { Filter, X, MessageCircle, RotateCcw, MapPin, Calendar } from 'lucide-react';
+import { Button } from './ui/button';
+import { servicesData } from '../data/servicesData';
+import type { Service, ServiceWithLocation } from '../data/servicesData';
+
+type AvailabilityKey = 'available' | 'available_soon' | 'not_available';
 
 const Portfolio = () => {
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [availabilityFilter, setAvailabilityFilter] = useState('');
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [filteredServices, setFilteredServices] = useState<ServiceWithLocation[]>([]);
+
+  const cities = Object.keys(servicesData);
+  const locations = selectedCity ? Object.keys(servicesData[selectedCity]) : [];
+
+  const availabilityConfig = {
+    available: { color: 'bg-green-500', text: 'Available', description: 'Ready for Advertisement' },
+    available_soon: { color: 'bg-orange-500', text: 'Available Soon', description: 'Structure installation pending' },
+    not_available: { color: 'bg-red-500', text: 'Not Available', description: 'Currently occupied' }
+  };
+
+  useEffect(() => {
+    let services: ServiceWithLocation[] = [];
+    
+    if (selectedCity) {
+      if (selectedLocation) {
+        services = servicesData[selectedCity][selectedLocation].map((service: Service) => ({
+          ...service,
+          city: selectedCity,
+          location: selectedLocation,
+          id: `${selectedCity}-${selectedLocation}-${service.service}`
+        }));
+      } else {
+        Object.keys(servicesData[selectedCity]).forEach(location => {
+          servicesData[selectedCity][location].forEach((service: Service) => {
+            services.push({
+              ...service,
+              city: selectedCity,
+              location,
+              id: `${selectedCity}-${location}-${service.service}`
+            });
+          });
+        });
+      }
+    } else {
+      Object.keys(servicesData).forEach(city => {
+        Object.keys(servicesData[city]).forEach(location => {
+          servicesData[city][location].forEach((service: Service) => {
+            services.push({
+              ...service,
+              city,
+              location,
+              id: `${city}-${location}-${service.service}`
+            });
+          });
+        });
+      });
+    }
+
+    if (availabilityFilter) {
+      services = services.filter((service: ServiceWithLocation) => service.availability === availabilityFilter);
+    }
+
+    setFilteredServices(services);
+  }, [selectedCity, selectedLocation, availabilityFilter]);
+
+  const handleServiceSelect = (serviceId: string) => {
+    setSelectedServices((prev: string[]) => 
+      prev.includes(serviceId) 
+        ? prev.filter((id: string) => id !== serviceId)
+        : [...prev, serviceId]
+    );
+  };
+
+  const resetFilters = () => {
+    setSelectedCity('');
+    setSelectedLocation('');
+    setAvailabilityFilter('');
+    setSelectedServices([]);
+  };
+
+  const submitToWhatsApp = () => {
+    if (selectedServices.length === 0) return;
+    
+    const selectedData = filteredServices.filter(service => selectedServices.includes(service.id));
+    const cities = [...new Set(selectedData.map(s => s.city))];
+    const locations = [...new Set(selectedData.map(s => s.location))];
+    const availabilities = [...new Set(selectedData.map(s => s.availability))];
+    const services = selectedData.map(s => s.service);
+    
+    const message = `Hello, I'm interested in:\nCity: ${cities.join(', ')}\nLocations: ${locations.join(', ')}\nAvailability: ${availabilities.join(', ')}\nServices: ${services.join(', ')}`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/919840055603?text=${encodedMessage}`, '_blank');
+  };
+
   return (
-    <section className="pt-18 pb-16 md:pt-26 md:pb-24 bg-white min-h-screen">
+    <section className="pt-18 pb-16 md:pt-26 md:pb-24 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <div className="w-32 h-32 bg-gradient-to-br from-primary to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-            <Settings className="w-16 h-16 text-white animate-spin" style={{ animationDuration: '4s' }} />
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-6">
-            Our <span className="text-primary">Portfolio</span>
+          <h1 className="text-4xl md:text-5xl text-gray-900 mb-4">
+            Service <span className="text-blue-600">Locations</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Showcasing our finest work and creative solutions that deliver maximum impact for our clients.
+            Find and book advertising services across multiple cities and locations
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-3xl p-12 border border-gray-200 shadow-xl mb-16"
-        >
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <Monitor className="w-8 h-8 text-primary" />
-            <h2 className="text-3xl font-bold text-gray-900">Coming Soon</h2>
-          </div>
-          <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-2xl mx-auto text-center">
-            We're crafting an extraordinary portfolio experience to showcase our finest work. 
-            Expect cutting-edge design, innovative features, and stunning visuals.
-          </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-              className="bg-green-50 rounded-2xl p-6 border border-green-200"
+        {/* Availability Filter Buttons */}
+        <div className="flex flex-wrap gap-4 justify-center mb-8">
+          {Object.entries(availabilityConfig).map(([key, config]) => (
+            <Button
+              key={key}
+              onClick={() => setAvailabilityFilter(availabilityFilter === key ? '' : key)}
+              className={`${config.color} hover:opacity-80 text-white ${
+                availabilityFilter === key ? 'ring-4 ring-blue-300' : ''
+              }`}
             >
-              <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Palette className="w-6 h-6 text-white" />
-              </div>
-              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <p className="text-green-700 font-semibold text-lg">Design</p>
-              <p className="text-green-600 text-sm">Complete</p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 }}
-              className="bg-yellow-50 rounded-2xl p-6 border border-yellow-200"
-            >
-              <div className="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Code className="w-6 h-6 text-white" />
-              </div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse mx-auto mb-3" />
-              <p className="text-yellow-700 font-semibold text-lg">Development</p>
-              <p className="text-yellow-600 text-sm">In Progress</p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7 }}
-              className="bg-blue-50 rounded-2xl p-6 border border-blue-200"
-            >
-              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Monitor className="w-6 h-6 text-white" />
-              </div>
-              <div className="w-3 h-3 bg-blue-300 rounded-full mx-auto mb-3" />
-              <p className="text-blue-700 font-semibold text-lg">Testing</p>
-              <p className="text-blue-600 text-sm">Upcoming</p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 }}
-              className="bg-purple-50 rounded-2xl p-6 border border-purple-200"
-            >
-              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Rocket className="w-6 h-6 text-white" />
-              </div>
-              <div className="w-3 h-3 bg-purple-300 rounded-full mx-auto mb-3" />
-              <p className="text-purple-700 font-semibold text-lg">Launch</p>
-              <p className="text-purple-600 text-sm">Preparation</p>
-            </motion.div>
-          </div>
-        </motion.div>
+              {config.text}
+            </Button>
+          ))}
+          <Button onClick={resetFilters} variant="outline" className="border-gray-300">
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Reset
+          </Button>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-white rounded-3xl p-12 border border-gray-200 shadow-xl mb-16"
-        >
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">What to Expect</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="w-8 h-8 text-white" />
-              </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-3">Interactive Design</h4>
-              <p className="text-gray-600">Engaging animations and smooth transitions that bring our work to life</p>
+        <div className="flex gap-8">
+          {/* Sidebar */}
+          <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block fixed lg:relative inset-y-0 left-0 z-50 w-80 bg-white shadow-lg lg:shadow-none p-6 overflow-y-auto`}>
+            <div className="flex justify-between items-center mb-6 lg:hidden">
+              <h3 className="text-lg font-semibold">Filters</h3>
+              <Button onClick={() => setSidebarOpen(false)} variant="ghost" size="sm">
+                <X className="w-4 h-4" />
+              </Button>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Monitor className="w-8 h-8 text-white" />
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                <select
+                  value={selectedCity}
+                  onChange={(e) => {
+                    setSelectedCity(e.target.value);
+                    setSelectedLocation('');
+                  }}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">All Cities</option>
+                  {cities.map(city => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-3">Responsive Layout</h4>
-              <p className="text-gray-600">Perfect viewing experience across all devices and screen sizes</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Rocket className="w-8 h-8 text-white" />
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <select
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  disabled={!selectedCity}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                >
+                  <option value="">All Locations</option>
+                  {locations.map(location => (
+                    <option key={location} value={location}>{location}</option>
+                  ))}
+                </select>
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-3">Fast Performance</h4>
-              <p className="text-gray-600">Lightning-fast loading times with optimized images and code</p>
             </div>
           </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-8 md:p-12 text-white"
-        >
-          <h2 className="text-3xl md:text-4xl mb-4">Coming Soon</h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Our portfolio showcase is under development. Stay tuned for an amazing collection of our work.
-          </p>
-          <div className="flex items-center justify-center gap-2">
-            <Sparkles className="w-5 h-5" />
-            <span>Something amazing is coming</span>
-            <Sparkles className="w-5 h-5" />
+          {/* Main Content */}
+          <div className="flex-1">
+            {/* Mobile Filter Button */}
+            <Button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden mb-6 bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <Filter className="w-4 h-4 mr-2" />
+              Filters
+            </Button>
+
+            {/* Services Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {filteredServices.length === 0 ? (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-gray-500 text-lg">No services found matching your criteria</p>
+                </div>
+              ) : (
+                filteredServices.map((service) => {
+                  const config = availabilityConfig[service.availability as AvailabilityKey];
+                  return (
+                    <motion.div
+                      key={service.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.service}</h3>
+                          <div className="flex items-center text-gray-600 mb-1">
+                            <MapPin className="w-4 h-4 mr-1" />
+                            <span className="text-sm">{service.city}</span>
+                          </div>
+                          <p className="text-sm text-gray-600">{service.location}</p>
+                        </div>
+                        <input
+                          type="checkbox"
+                          checked={selectedServices.includes(service.id)}
+                          onChange={() => handleServiceSelect(service.id)}
+                          className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white ${config.color}`}>
+                          {config.text}
+                        </div>
+                        <p className="text-sm text-gray-600">{config.description}</p>
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          <span>Available by: {service.available_by}</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Submit Button */}
+            {selectedServices.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="fixed bottom-6 right-6 lg:relative lg:bottom-auto lg:right-auto lg:text-center"
+              >
+                <Button
+                  onClick={submitToWhatsApp}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow-lg"
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Submit Interest ({selectedServices.length})
+                </Button>
+              </motion.div>
+            )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

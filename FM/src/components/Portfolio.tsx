@@ -265,3 +265,4 @@ const Portfolio = () => {
 };
 
 export { Portfolio };
+//today functionality analyze done!

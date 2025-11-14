@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { Button } from './ui/button';

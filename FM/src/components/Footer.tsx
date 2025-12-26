@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   MapPin, 
   Phone, 
@@ -14,14 +15,14 @@ import { Button } from './ui/button';
 
 const footerLinks = {
   services: [
-    'Rickshaw Autotop Ads',
-    'Gift Articles',
-    'LED Displays',
-    'Gantry Arches',
-    'Center Medians',
-    'AC Traffic Booth',
-    'Barricades',
-    'Hoarding'
+    { name: 'Traffic Sunshade Barricade', id: 'traffic-sunshade-barricade' },
+    { name: 'Billboard / Hoardings', id: 'billboard-hoardings' },
+    { name: 'Auto Rickshaw Ads', id: 'auto-rickshaw' },
+    { name: 'Traffic Police Booth', id: 'traffic-police-booth' },
+    { name: 'Pole Kiosk', id: 'pole-kiosk' },
+    { name: 'Center Median Barricade', id: 'center-median-barricade' },
+    { name: 'LED Display', id: 'led-display' },
+    { name: 'Bus Shelter', id: 'bus-shelter' }
   ],
   company: [
     'About Us',
@@ -49,18 +50,18 @@ const socialLinks = [
 ];
 
 interface FooterProps {
-  onNavigate: (page: string) => void;
   variant?: 'full' | 'compact';
 }
 
-const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProps) => {
+const FooterComponent = React.memo(({ variant = 'full' }: FooterProps) => {
+  const navigate = useNavigate();
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Wrap navigation with scroll
-  const handleNavigation = (page: string) => {
-    onNavigate(page);
+  const handleNavigation = (path: string) => {
+    navigate(path);
     scrollToTop();
   };
 
@@ -72,11 +73,13 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Logo and copyright */}
             <div className="flex items-center space-x-4">
-              <img
-                src="/assets/Fortune-Logo.png"
-                alt="Fortune Media"
-                className="h-8 w-auto"
-              />
+              <Link to="/">
+                <img
+                  src="/assets/Fortune-Logo.png"
+                  alt="Fortune Media"
+                  className="h-8 w-auto"
+                />
+              </Link>
               <span className="text-gray-400 text-sm hidden sm:block">© 2024 All rights reserved.</span>
             </div>
 
@@ -146,11 +149,13 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
             >
               {/* Logo */}
               <div className="mb-6">
-                <img
-                  src="/assets/Fortune-Logo.png"
-                  alt="Fortune Media"
-                  className="h-12 w-auto"
-                />
+                <Link to="/">
+                  <img
+                    src="/assets/Fortune-Logo.png"
+                    alt="Fortune Media"
+                    className="h-12 w-auto"
+                  />
+                </Link>
               </div>
 
               <p className="text-gray-300 mb-6 leading-relaxed">
@@ -202,13 +207,13 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
             <h3 className="font-semibold text-lg mb-6">Our Services</h3>
             <ul className="space-y-3">
               {footerLinks.services.map((service) => (
-                <li key={service}>
-                  <button
-                    onClick={() => handleNavigation('services')}
-                    className="text-gray-300 hover:text-primary transition-colors text-left"
+                <li key={service.id}>
+                  <Link
+                    to={`/services/${service.id}`}
+                    className="text-gray-300 hover:text-primary transition-colors"
                   >
-                    {service}
-                  </button>
+                    {service.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -225,12 +230,12 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link}>
-                  <button
-                    onClick={() => handleNavigation('home')}
-                    className="text-gray-300 hover:text-primary transition-colors text-left"
+                  <Link
+                    to="/"
+                    className="text-gray-300 hover:text-primary transition-colors"
                   >
                     {link}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -247,12 +252,12 @@ const FooterComponent = React.memo(({ onNavigate, variant = 'full' }: FooterProp
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link}>
-                  <button
-                    onClick={() => handleNavigation('contact')}
-                    className="text-gray-300 hover:text-primary transition-colors text-left"
+                  <Link
+                    to="/contact"
+                    className="text-gray-300 hover:text-primary transition-colors"
                   >
                     {link}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

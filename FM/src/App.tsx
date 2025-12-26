@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo, Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -6,103 +7,66 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 // Lazy load components for better performance
 const Home = lazy(() => import('./components/Home').then(module => ({ default: module.Home })));
 const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
+const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
 const Portfolio = lazy(() => import('./components/Portfolio').then(module => ({ default: module.Portfolio })));
 const Contact = lazy(() => import('./components/Contact').then(module => ({ default: module.Contact })));
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [isLoading, setIsLoading] = useState(true);
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
+function AppContent() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  
+  // Scroll to top on route change
   useEffect(() => {
-    // Reduce initial loading time for better UX
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  
+  // Determine current page for navigation highlighting
+  const getCurrentPage = () => {
+    if (currentPath === '/') return 'home';
+    if (currentPath.startsWith('/services')) return 'services';
+    if (currentPath === '/portfolio') return 'portfolio';
+    if (currentPath === '/contact') return 'contact';
+    return 'home';
+  };
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleNavigate = useCallback((page: string) => {
-    if (page === currentPage) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [currentPage]);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [currentPage]);
-
-  const currentPageComponent = useMemo(() => {
-    const LoadingSpinner = () => (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-
-    switch (currentPage) {
-      case 'home':
-        return (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Home onNavigate={handleNavigate} />
-          </Suspense>
-        );
-      case 'services':
-        return (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Services />
-          </Suspense>
-        );
-      case 'portfolio':
-        return (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Portfolio />
-          </Suspense>
-        );
-      case 'contact':
-        return (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Contact />
-          </Suspense>
-        );
-      default:
-        return (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Home onNavigate={handleNavigate} />
-          </Suspense>
-        );
-    }
-  }, [currentPage]);
-
-  // Show footer on all pages, but with different styling for portfolio
-  const footerVariant = useMemo(() => currentPage === 'portfolio' ? 'compact' : 'full', [currentPage]);
-
-  if (isLoading) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center bg-gray-900">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <div className="text-white text-xl font-semibold">Loading Fortune Media</div>
-        </div>
-      </div>
-    );
-  }
+  const currentPage = getCurrentPage();
+  const footerVariant = currentPage === 'portfolio' ? 'compact' : 'full';
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full">
       {/* Navigation */}
-      <Navigation currentPage={currentPage} onNavigate={handleNavigate} />
+      <Navigation currentPage={currentPage} />
       
       {/* Main content */}
       <main className="w-full overflow-x-hidden">
-        {currentPageComponent}
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/:serviceId" element={<ServiceDetail />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Suspense>
       </main>
       
-      {/* Footer - Show on all pages with different variants */}
-      <Footer onNavigate={handleNavigate} variant={footerVariant} />
-       <SpeedInsights />
+      {/* Footer */}
+      <Footer variant={footerVariant} />
+      <SpeedInsights />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }

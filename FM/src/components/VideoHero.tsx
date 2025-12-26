@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
@@ -12,11 +13,7 @@ if (typeof document !== 'undefined') {
   document.head.appendChild(link);
 }
 
-interface VideoHeroProps {
-  onNavigate: (page: string) => void;
-}
-
-const VideoHeroComponent = React.memo(({ onNavigate }: VideoHeroProps) => {
+const VideoHeroComponent = React.memo(() => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [showPoster, setShowPoster] = React.useState(true);
@@ -132,25 +129,27 @@ const VideoHeroComponent = React.memo(({ onNavigate }: VideoHeroProps) => {
                 className="relative"
                 whileHover={{ scale: 1.02 }}
               >
-               <Button
-                               onClick={() => onNavigate('contact')}
-                               className="relative bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 text-white px-4 py-2 text-sm font-bold rounded-full shadow-lg animate-bounce hover:animate-pulse transition-all duration-300 border-2 border-white/20"
-                               style={{
-                                 animation: 'vibrate 0.3s linear infinite alternate, glow 2s ease-in-out infinite alternate'
-                               }}
-                             >
-                               <span className="relative z-10">Get in Touch</span>
-                               <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full blur-sm opacity-75 animate-ping"></div>
-                             </Button>
+               <Link to="/contact">
+                 <Button
+                   className="relative bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 text-white px-4 py-2 text-sm font-bold rounded-full shadow-lg animate-bounce hover:animate-pulse transition-all duration-300 border-2 border-white/20"
+                   style={{
+                     animation: 'vibrate 0.3s linear infinite alternate, glow 2s ease-in-out infinite alternate'
+                   }}
+                 >
+                   <span className="relative z-10">Get in Touch</span>
+                   <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full blur-sm opacity-75 animate-ping"></div>
+                 </Button>
+               </Link>
               </motion.div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onNavigate('portfolio')}
-                className="border-white text-white hover:bg-white hover:text-black px-4 py-2 text-sm font-semibold w-auto"
-              >
-                About Us
-              </Button>
+              <Link to="/portfolio">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-white text-white hover:bg-white hover:text-black px-4 py-2 text-sm font-semibold w-auto"
+                >
+                  About Us
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -195,14 +194,15 @@ const VideoHeroComponent = React.memo(({ onNavigate }: VideoHeroProps) => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex justify-center items-center mb-8"
           >
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => onNavigate('portfolio')}
-              className="border-white text-white hover:bg-white hover:text-black px-8 py-3 text-lg font-semibold shadow-none w-auto"
-            >
-              About Us
-            </Button>
+            <Link to="/portfolio">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-black px-8 py-3 text-lg font-semibold shadow-none w-auto"
+              >
+                About Us
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </div>

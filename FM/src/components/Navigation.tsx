@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 
 interface NavigationProps {
   currentPage: string;
-  onNavigate: (page: string) => void;
 }
 
-const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationProps) => {
+const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'services', label: 'Our Services' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'contact', label: 'About Us' }
+    { id: 'home', label: 'Home', path: '/' },
+    { id: 'services', label: 'Our Services', path: '/services' },
+    { id: 'portfolio', label: 'Portfolio', path: '/portfolio' },
+    { id: 'contact', label: 'About Us', path: '/contact' }
   ];
 
   const socialLinks = [
@@ -41,8 +42,8 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (pageId: string) => {
-    onNavigate(pageId);
+  const handleNavClick = (path: string) => {
+    navigate(path);
     setIsOpen(false);
   };
 
@@ -59,39 +60,40 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex-shrink-0 cursor-pointer"
-            onClick={() => handleNavClick('home')}
-          >
-            <img
-              src="/assets/Fortune-Logo.png"
-              alt="Fortune Media"
-              className="h-10 w-auto"
-            />
-          </motion.div>
+          <Link to="/">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex-shrink-0 cursor-pointer"
+            >
+              <img
+                src="/assets/Fortune-Logo.png"
+                alt="Fortune Media"
+                className="h-10 w-auto"
+              />
+            </motion.div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <div className="ml-10 flex items-baseline space-x-8">
               {navItems.map((item) => (
-                <motion.button
-                  key={item.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
-                    currentPage === item.id
-                      ? needsDarkTheme 
-                        ? 'text-primary border-b-2 border-primary'
-                        : 'text-white border-b-2 border-white'
-                      : needsDarkTheme
-                      ? 'text-gray-700 hover:text-primary'
-                      : 'text-white/90 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                </motion.button>
+                <Link key={item.id} to={item.path}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`px-3 py-2 text-sm font-medium transition-colors ${
+                      currentPage === item.id
+                        ? needsDarkTheme 
+                          ? 'text-primary border-b-2 border-primary'
+                          : 'text-white border-b-2 border-white'
+                        : needsDarkTheme
+                        ? 'text-gray-700 hover:text-primary'
+                        : 'text-white/90 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                  </motion.button>
+                </Link>
               ))}
             </div>
 
@@ -115,16 +117,17 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
               </div>
                {/* Get in Touch Button */}
             <div className="flex items-center space-x-4 ml-6">
-              <Button
-                onClick={() => handleNavClick('contact')}
-                className="relative bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 text-white px-4 py-2 text-sm font-bold rounded-full shadow-lg animate-bounce hover:animate-pulse transition-all duration-300 border-2 border-white/20"
-                style={{
-                  animation: 'vibrate 0.3s linear infinite alternate, glow 2s ease-in-out infinite alternate'
-                }}
-              >
-                <span className="relative z-10">Get in Touch</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full blur-sm opacity-75 animate-ping"></div>
-              </Button>
+              <Link to="/contact">
+                <Button
+                  className="relative bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-yellow-500 hover:via-red-500 hover:to-pink-500 text-white px-4 py-2 text-sm font-bold rounded-full shadow-lg animate-bounce hover:animate-pulse transition-all duration-300 border-2 border-white/20"
+                  style={{
+                    animation: 'vibrate 0.3s linear infinite alternate, glow 2s ease-in-out infinite alternate'
+                  }}
+                >
+                  <span className="relative z-10">Get in Touch</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full blur-sm opacity-75 animate-ping"></div>
+                </Button>
+              </Link>
               
               <style>{`
                 @keyframes vibrate {
@@ -169,18 +172,19 @@ const NavigationComponent = React.memo(({ currentPage, onNavigate }: NavigationP
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-w-full">
               {navItems.map((item) => (
-                <motion.button
-                  key={item.id}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors rounded-md ${
-                    currentPage === item.id
-                      ? 'text-primary bg-primary/10 border-l-4 border-primary'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-50'
-                  }`}
-                >
-                  {item.label}
-                </motion.button>
+                <Link key={item.id} to={item.path}>
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsOpen(false)}
+                    className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors rounded-md ${
+                      currentPage === item.id
+                        ? 'text-primary bg-primary/10 border-l-4 border-primary'
+                        : 'text-gray-700 hover:text-primary hover:bg-gray-50'
+                    }`}
+                  >
+                    {item.label}
+                  </motion.button>
+                </Link>
               ))}
 
               {/* Social Icons (Mobile) */}

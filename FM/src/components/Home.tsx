@@ -43,4 +43,4 @@ const HomeComponent = React.memo(() => {
 
 HomeComponent.displayName = 'Home';
 
-export const Home = HomeComponent;
+export default HomeComponent;

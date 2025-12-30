@@ -60,7 +60,7 @@ const serviceOptions = [
   'Other'
 ];
 
-export function Contact() {
+function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -421,3 +421,5 @@ const handleSubmit = async (e: React.FormEvent) => {
     </section>
   );
 }
+
+export default Contact;

@@ -1,15 +1,22 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
-// Lazy load components for better performance
-const Home = lazy(() => import('./components/Home').then(module => ({ default: module.Home })));
-const Services = lazy(() => import('./components/Services').then(module => ({ default: module.Services })));
+// ✅ Correct lazy imports (default exports only)
+const Home = lazy(() => import('./components/Home'));
+const Services = lazy(() => import('./components/Services'));
 const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
-const Portfolio = lazy(() => import('./components/Portfolio').then(module => ({ default: module.Portfolio })));
-const Contact = lazy(() => import('./components/Contact').then(module => ({ default: module.Contact })));
+const ServiceFilter = lazy(() => import('./components/ServiceFilter'));
+const Contact = lazy(() => import('./components/Contact'));
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -19,45 +26,48 @@ const LoadingSpinner = () => (
 
 function AppContent() {
   const location = useLocation();
-  const currentPath = location.pathname;
-  
-  // Scroll to top on route change
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-  
-  // Determine current page for navigation highlighting
-  const getCurrentPage = () => {
-    if (currentPath === '/') return 'home';
-    if (currentPath.startsWith('/services')) return 'services';
-    if (currentPath === '/portfolio') return 'portfolio';
-    if (currentPath === '/contact') return 'contact';
-    return 'home';
-  };
 
-  const currentPage = getCurrentPage();
-  const footerVariant = currentPage === 'portfolio' ? 'compact' : 'full';
+  const currentPath = location.pathname;
+
+  const currentPage =
+    currentPath === '/'
+      ? 'home'
+      : currentPath.startsWith('/services')
+      ? 'services'
+      : currentPath === '/ServiceFilter'
+      ? 'ServiceFilter'
+      : currentPath === '/contact'
+      ? 'contact'
+      : 'home';
+
+  const footerVariant = currentPage === 'ServiceFilter' ? 'compact' : 'full';
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden w-full">
-      {/* Navigation */}
+    <div className="min-h-screen bg-white w-full">
       <Navigation currentPage={currentPage} />
-      
-      {/* Main content */}
-      <main className="w-full overflow-x-hidden">
+
+      <main className="w-full">
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:serviceId" element={<ServiceDetail />} />
-            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/ServiceFilter" element={<ServiceFilter />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </Suspense>
       </main>
-      
-      {/* Footer */}
-      <Footer variant={footerVariant} />
+
+      <Footer
+        variant={footerVariant}
+        onNavigate={(path) => navigate(path)}
+      />
+
       <SpeedInsights />
     </div>
   );

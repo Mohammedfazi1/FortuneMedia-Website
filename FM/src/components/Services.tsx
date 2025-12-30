@@ -451,4 +451,4 @@ const ServicesComponent = React.memo(() => {
 
 ServicesComponent.displayName = 'Services';
 
-export const Services = ServicesComponent;
+export default ServicesComponent;

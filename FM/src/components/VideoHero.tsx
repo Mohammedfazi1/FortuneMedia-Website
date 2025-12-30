@@ -141,7 +141,7 @@ const VideoHeroComponent = React.memo(() => {
                  </Button>
                </Link>
               </motion.div>
-              <Link to="/portfolio">
+              <Link to="/ServiceFilter">
                 <Button
                   variant="outline"
                   size="sm"
@@ -194,7 +194,7 @@ const VideoHeroComponent = React.memo(() => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex justify-center items-center mb-8"
           >
-            <Link to="/portfolio">
+            <Link to="/ServiceFilter">
               <Button
                 variant="outline"
                 size="lg"

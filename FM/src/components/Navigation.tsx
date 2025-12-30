@@ -11,12 +11,12 @@ interface NavigationProps {
 const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const navItems = [
     { id: 'home', label: 'Home', path: '/' },
     { id: 'services', label: 'Our Services', path: '/services' },
-    { id: 'portfolio', label: 'Portfolio', path: '/portfolio' },
+    { id: 'ServiceFilter', label: 'FilterService', path: '/ServiceFilter' },
     { id: 'contact', label: 'About Us', path: '/contact' }
   ];
 
@@ -31,7 +31,7 @@ const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
   const needsDarkTheme =
   currentPage === 'services' ||
   currentPage === 'contact' ||
-  currentPage === 'portfolio' || // 👈 add this line
+  currentPage === 'ServiceFilter' || // 👈 add this line
   isScrolled;
 
   useEffect(() => {
@@ -41,12 +41,10 @@ const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleNavClick = (path: string) => {
+const handleNavClick = (path: string) => {
     navigate(path);
     setIsOpen(false);
   };
-
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -172,19 +170,18 @@ const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-w-full">
               {navItems.map((item) => (
-                <Link key={item.id} to={item.path}>
-                  <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsOpen(false)}
-                    className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors rounded-md ${
-                      currentPage === item.id
-                        ? 'text-primary bg-primary/10 border-l-4 border-primary'
-                        : 'text-gray-700 hover:text-primary hover:bg-gray-50'
-                    }`}
-                  >
-                    {item.label}
-                  </motion.button>
-                </Link>
+                <motion.button
+                  key={item.id}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleNavClick(item.path)}
+                  className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors rounded-md ${
+                    currentPage === item.id
+                      ? 'text-primary bg-primary/10 border-l-4 border-primary'
+                      : 'text-gray-700 hover:text-primary hover:bg-gray-50'
+                  }`}
+                >
+                  {item.label}
+                </motion.button>
               ))}
 
               {/* Social Icons (Mobile) */}

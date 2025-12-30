@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState, useEffect } from 'react';
+import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Check, Phone, Mail, MapPin, Clock, Star, Users, TrendingUp, ChevronDown, ArrowUp, ExternalLink, X } from 'lucide-react';
 import { Button } from './ui/button';
@@ -396,14 +396,7 @@ const ServiceDetail = memo(() => {
     window.open('https://maps.google.com/?q=Mumbai,India', '_blank');
   }, []);
 
-  const serviceImages = useMemo(() => [
-    service?.image,
-    '/assets/Traffic_SunshadeBarricade.png',
-    '/assets/Center_MedianBarricade.png',
-    '/assets/Auto_Rickshaw.jpeg',
-    '/assets/Traffic_PoliceBooth.png',
-    '/assets/Pole_Kiosk.png'
-  ].filter(Boolean), [service?.image]);
+  const serviceImages = useMemo(() => [service?.image].filter(Boolean), [service?.image]);
 
   const openImageModal = useCallback((image: string) => {
     setSelectedImage(image);
@@ -568,7 +561,7 @@ const ServiceDetail = memo(() => {
                     {serviceImages.map((image, index) => (
                       <button
                         key={index}
-                        onClick={() => openImageModal(image)}
+                        onClick={() => image && openImageModal(image)}
                         className="flex-shrink-0 w-80 h-60 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all cursor-pointer group"
                       >
                         <ImageWithFallback

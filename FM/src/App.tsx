@@ -15,7 +15,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 const Home = lazy(() => import('./components/Home'));
 const Services = lazy(() => import('./components/Services'));
 const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
-const ServiceFilter = lazy(() => import('./components/ServiceFilter'));
+const ServiceFilter = lazy(() => import('./pages/ServiceFilterPage'));
 const Contact = lazy(() => import('./components/Contact'));
 
 const LoadingSpinner = () => (

@@ -1,9 +1,8 @@
+import React from 'react';
+import { ServiceFilterPage } from '../pages/ServiceFilterPage';
+
 const ServiceFilter = () => {
-  return (
-    <div>
-      {/* Fresh page content here */}
-    </div>
-  );
+  return <ServiceFilterPage />;
 };
 
 export default ServiceFilter;

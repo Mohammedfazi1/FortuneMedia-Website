@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
 import { Input } from '../ui/input';
-import { servicesData, filterData } from '../../data/servicesData';
+import { filterData } from '../../data/servicesData';
 
 interface GlobalSearchBarProps {
   searchTerm: string;

@@ -1,176 +1,101 @@
-import React from 'react';
-import { X, Phone, MessageCircle, Mail, MapPin, Tag } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { Service } from '../../data/servicesData';
-import { Button } from '../ui/button';
+import { type Service } from "../../data/servicesData";
+import { X, Phone, MessageCircle, MapPin } from "lucide-react";
 
-interface ServiceDetailsPanelProps {
-  service: Service | null;
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const ServiceDetailsPanel: React.FC<ServiceDetailsPanelProps> = ({
+export default function ServiceDetailsPanel({
   service,
-  isOpen,
-  onClose
-}) => {
-  if (!service) return null;
-
+  onClose,
+}: {
+  service: Service;
+  onClose: () => void;
+}) {
   const handleCall = () => {
     window.open('tel:+919876543210', '_self');
   };
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Hi, I'm interested in ${service.name} advertising service. Please provide more details.`);
-    window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+    const message = `Hi, I'm interested in ${service.name} in ${service.regions.join(', ')}`;
+    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const handleEnquiry = () => {
-    const subject = encodeURIComponent(`Enquiry for ${service.name}`);
-    const body = encodeURIComponent(`Hi,\n\nI'm interested in your ${service.name} advertising service. Please provide more information about pricing and availability.\n\nThank you.`);
-    window.open(`mailto:info@fortunemedia.com?subject=${subject}&body=${body}`, '_self');
+    const subject = `Enquiry for ${service.name}`;
+    window.open(`mailto:info@fortunemedia.com?subject=${encodeURIComponent(subject)}`, '_self');
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4"
-          onClick={onClose}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ type: 'spring', duration: 0.3 }}
-            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+    <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-end lg:items-center">
+      <div className="w-full max-w-4xl bg-white rounded-t-xl lg:rounded-xl p-6 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">{service.name}</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
-            <div className="flex flex-col h-full">
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                <h2 className="text-2xl font-bold text-gray-900">{service.name}</h2>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <X className="h-6 w-6 text-gray-500" />
-                </button>
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
+            <img
+              src={service.image}
+              alt={service.name}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = 'https://via.placeholder.com/600x400/f3f4f6/9ca3af?text=Service+Image';
+              }}
+            />
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Service Coverage</h3>
+              <div className="flex items-center text-gray-600 mb-2">
+                <MapPin className="h-4 w-4 mr-2" />
+                <span>{service.regions.join(', ')}</span>
               </div>
-
-              {/* Content */}
-              <div className="flex-1 overflow-y-auto">
-                <div className="p-6">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Image */}
-                    <div className="space-y-4">
-                      <div className="relative overflow-hidden rounded-lg">
-                        <img
-                          src={service.image}
-                          alt={service.name}
-                          className="w-full h-64 lg:h-80 object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = '/assets/placeholder-service.jpg';
-                          }}
-                        />
-                        <div className="absolute top-4 right-4">
-                          <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                            service.available
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}>
-                            {service.available ? 'Available' : 'Not Available'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Details */}
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                        <p className="text-gray-600 leading-relaxed">{service.description}</p>
-                      </div>
-
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Service Coverage</h3>
-                        <div className="space-y-3">
-                          <div className="flex items-start space-x-2">
-                            <MapPin className="h-5 w-5 text-primary mt-0.5" />
-                            <div>
-                              <p className="font-medium text-gray-900">Regions</p>
-                              <p className="text-gray-600">{service.regions.join(', ')}</p>
-                            </div>
-                          </div>
-                          {service.locations.length > 0 && (
-                            <div className="flex items-start space-x-2">
-                              <MapPin className="h-5 w-5 text-primary mt-0.5" />
-                              <div>
-                                <p className="font-medium text-gray-900">Locations</p>
-                                <p className="text-gray-600">{service.locations.join(', ')}</p>
-                              </div>
-                            </div>
-                          )}
-                          {service.subLocations.length > 0 && (
-                            <div className="flex items-start space-x-2">
-                              <MapPin className="h-5 w-5 text-primary mt-0.5" />
-                              <div>
-                                <p className="font-medium text-gray-900">Sub-locations</p>
-                                <p className="text-gray-600">{service.subLocations.join(', ')}</p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Tag className="h-5 w-5 text-primary" />
-                        <span className="text-lg font-semibold text-primary">{service.pricing}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="p-6 border-t border-gray-200 bg-gray-50">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button
-                    onClick={handleCall}
-                    className="flex-1 flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700"
-                    disabled={!service.available}
-                  >
-                    <Phone className="h-5 w-5" />
-                    <span>Call Now</span>
-                  </Button>
-                  <Button
-                    onClick={handleWhatsApp}
-                    className="flex-1 flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600"
-                    disabled={!service.available}
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                    <span>WhatsApp</span>
-                  </Button>
-                  <Button
-                    onClick={handleEnquiry}
-                    variant="outline"
-                    className="flex-1 flex items-center justify-center space-x-2"
-                    disabled={!service.available}
-                  >
-                    <Mail className="h-5 w-5" />
-                    <span>Enquiry</span>
-                  </Button>
-                </div>
-              </div>
+              <span
+                className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                  service.available
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                }`}
+              >
+                {service.available ? 'Available' : 'Not Available'}
+              </span>
             </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+              <p className="text-gray-700 leading-relaxed">{service.description}</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+              <button
+                onClick={handleCall}
+                className="flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                Call Now
+              </button>
+              <button
+                onClick={handleWhatsApp}
+                className="flex items-center justify-center px-4 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4 mr-2" />
+                WhatsApp
+              </button>
+              <button
+                onClick={handleEnquiry}
+                className="flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Enquiry
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
-};
+}

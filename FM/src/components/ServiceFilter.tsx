@@ -1,4 +1,3 @@
-import React from 'react';
 import { ServiceFilterPage } from '../pages/ServiceFilterPage';
 
 const ServiceFilter = () => {

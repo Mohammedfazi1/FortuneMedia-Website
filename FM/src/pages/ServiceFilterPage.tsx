@@ -4,7 +4,7 @@ import { GlobalSearchBar } from '../components/search/GlobalSearchBar';
 import { FilterSidebar } from '../components/filters/FilterSidebar';
 import { MobileFilterDrawer } from '../components/filters/MobileFilterDrawer';
 import { ServiceGrid } from '../components/cards/ServiceGrid';
-import { ServiceDetailsPanel } from '../components/details/ServiceDetailsPanel';
+import ServiceDetailsPanel from '../components/details/ServiceDetailsPanel';
 import { servicesData, type Service } from '../data/servicesData';
 import { Button } from '../components/ui/button';
 
@@ -32,7 +32,6 @@ export const ServiceFilterPage: React.FC = () => {
   // UI states
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   // Shuffle services on first load
   const [shuffledServices] = useState(() => shuffleArray(servicesData));
@@ -146,11 +145,9 @@ export const ServiceFilterPage: React.FC = () => {
 
   const handleViewDetails = useCallback((service: Service) => {
     setSelectedService(service);
-    setIsDetailsOpen(true);
   }, []);
 
   const handleCloseDetails = useCallback(() => {
-    setIsDetailsOpen(false);
     setSelectedService(null);
   }, []);
 
@@ -243,11 +240,12 @@ export const ServiceFilterPage: React.FC = () => {
       />
 
       {/* Service Details Panel */}
-      <ServiceDetailsPanel
-        service={selectedService}
-        isOpen={isDetailsOpen}
-        onClose={handleCloseDetails}
-      />
+      {selectedService && (
+        <ServiceDetailsPanel
+          service={selectedService}
+          onClose={handleCloseDetails}
+        />
+      )}
     </div>
   );
 };

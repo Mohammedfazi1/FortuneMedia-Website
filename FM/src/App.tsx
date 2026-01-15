@@ -16,6 +16,7 @@ const Home = lazy(() => import('./components/Home'));
 const Services = lazy(() => import('./components/Services'));
 const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
 const ServiceFilter = lazy(() => import('./pages/ServiceFilterPage'));
+const Gallery = lazy(() => import('./components/Gallery'));
 const Contact = lazy(() => import('./components/Contact'));
 
 const LoadingSpinner = () => (
@@ -41,6 +42,8 @@ function AppContent() {
       ? 'services'
       : currentPath === '/ServiceFilter'
       ? 'ServiceFilter'
+      : currentPath === '/gallery'
+      ? 'gallery'
       : currentPath === '/contact'
       ? 'contact'
       : 'home';
@@ -58,6 +61,7 @@ function AppContent() {
             <Route path="/services" element={<Services />} />
             <Route path="/services/:serviceId" element={<ServiceDetail />} />
             <Route path="/ServiceFilter" element={<ServiceFilter />} />
+            <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </Suspense>

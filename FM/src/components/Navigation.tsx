@@ -16,7 +16,8 @@ const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
   const navItems = [
     { id: 'home', label: 'Home', path: '/' },
     { id: 'services', label: 'Our Services', path: '/services' },
-    { id: 'ServiceFilter', label: 'FilterService', path: '/ServiceFilter' },
+    { id: 'ServiceFilter', label: 'Live Projects', path: '/ServiceFilter' },
+    { id: 'gallery', label: 'Gallery', path: '/gallery' },
     { id: 'contact', label: 'About Us', path: '/contact' }
   ];
 
@@ -31,7 +32,8 @@ const NavigationComponent = React.memo(({ currentPage }: NavigationProps) => {
   const needsDarkTheme =
   currentPage === 'services' ||
   currentPage === 'contact' ||
-  currentPage === 'ServiceFilter' || // 👈 add this line
+  currentPage === 'ServiceFilter' ||
+  currentPage === 'gallery' ||
   isScrolled;
 
   useEffect(() => {

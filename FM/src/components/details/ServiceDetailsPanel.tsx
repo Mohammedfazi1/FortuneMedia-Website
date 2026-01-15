@@ -9,17 +9,17 @@ export default function ServiceDetailsPanel({
   onClose: () => void;
 }) {
   const handleCall = () => {
-    window.open('tel:+919876543210', '_self');
+    window.open('tel:+917010696969', '_self');
   };
 
   const handleWhatsApp = () => {
     const message = `Hi, I'm interested in ${service.name} in ${service.regions.join(', ')}`;
-    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/917010696969?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const handleEnquiry = () => {
     const subject = `Enquiry for ${service.name}`;
-    window.open(`mailto:info@fortunemedia.com?subject=${encodeURIComponent(subject)}`, '_self');
+    window.open(`mailto:fortunemedia.adv@gmail.com?subject=${encodeURIComponent(subject)}`, '_self');
   };
 
   return (
